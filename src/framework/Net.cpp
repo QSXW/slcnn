@@ -2,7 +2,10 @@
 
 #include <cassert>
 
+#include "layer/ConvolutionLayer.h"
 #include "layer/BatchNormLayer.h"
+#include "layer/ReLuLayer.h"
+#include "Timer.h"
 
 namespace sl
 {
@@ -15,9 +18,17 @@ namespace sl
     {
         for (auto &desc : descs)
         {
+            if (desc.Type == Layer::Type::Convolution)
+            {
+                layers.emplace_back(Layer::Create<ConvolutionLayer>(desc));
+            }
             if (desc.Type == Layer::Type::BatchNormalize)
             {
-                layerStack.emplace_back(Layer::Create<BatchNormLayer>(desc));
+                layers.emplace_back(Layer::Create<BatchNormLayer>(desc));
+            }
+            if (desc.Type == Layer::Type::ReLu)
+            {
+                layers.emplace_back(Layer::Create<ReLuLayer>(desc));
             }
         }
     }
@@ -27,8 +38,19 @@ namespace sl
         
     }
 
-    void Net::Train()
+    void Net::Forward()
     {
-        assert(!layerStack.empty() && "There is no available Layer");
+        assert(!layers.empty() && "There is no available Layer");
+        
+        {
+            Timer timer;
+            for (auto &layer : layers)
+            {
+                layer->Forward();
+            }
+        }
+    }
+    void Net::Backward()
+    {
     }
 };

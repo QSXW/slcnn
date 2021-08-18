@@ -12,6 +12,10 @@ namespace sl
 
         }
 
+        virtual void Forward() override;
+
+        virtual void Backward() override;
+
     private:
         
     };

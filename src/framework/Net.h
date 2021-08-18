@@ -9,7 +9,7 @@ namespace sl
     class Net
     {
     public:
-        using LayerStack = std::vector<std::shared_ptr<Layer>>;
+        using LayerList = std::vector<std::shared_ptr<Layer>>;
         static std::shared_ptr<Net> CreateNet();
 
     public:
@@ -17,9 +17,10 @@ namespace sl
 
         ~Net();
 
-        void Train();
+        void Forward();
+        void Backward();
 
     private:
-        LayerStack layerStack;
+        LayerList layers;
     };
 }

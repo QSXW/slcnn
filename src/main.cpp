@@ -6,10 +6,13 @@ using namespace ::sl;
 int main()
 {
     Net net{{
-        { Layer::Type::BatchNormalize, 10, 20 }
+        { Layer::Type::Convolution, 10, 20 },
+        { Layer::Type::BatchNormalize, 10, 20 },
+        { Layer::Type::ReLu, 10, 20 }
     }};
 
-    net.Train();
+    net.Forward();
+    net.Backward();
 
     return 0;
 }

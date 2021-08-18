@@ -50,9 +50,9 @@ namespace sl
 
         virtual ~Layer() { }
 
-        virtual void OnAttach() { }
+        virtual void Forward() { }
 
-        virtual void OnDetach() { }
+        virtual void Backward() { }
 
     public:
         Type type;
