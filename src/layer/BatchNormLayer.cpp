@@ -4,12 +4,12 @@
 
 namespace sl
 {
-    void BatchNormLayer::Forward()
+    void BatchNormLayer::Forward(Tensor::Batch &input, Tensor::Batch &output)
     {
         
     }
 
-    void BatchNormLayer::Backward()
+    void BatchNormLayer::Backward(Tensor::Batch &input, Tensor::Batch &output)
     {
 
     }

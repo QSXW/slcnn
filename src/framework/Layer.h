@@ -1,9 +1,17 @@
 #pragma once
 
 #include <memory>
+#include <map>
+#include <string>
+#include <vector>
+
+#include "Map.h"
+#include "Tensor.h"
 
 namespace sl
 {
+    class Net;
+
     class Layer
     {
     public:
@@ -12,22 +20,25 @@ namespace sl
             None,
             Convolution,
             BatchNormalize,
-            ReLu
+            ReLu,
+            MaxPool,
+            Flatten,
+            Softmax
         };
 
         struct Description
         {
-            Description(Layer::Type t, int w, int s) :
+            Description(Layer::Type t, const std::map<std::string, float> &b = DataSet::Bias::NONE, const std::map<std::string, std::string> &p = { }) :
                 Type{ t },
-                winograd{ w },
-                sgemm{ s }
+                params{ p },
+                bias{ b }
             {
 
             }
 
             Layer::Type Type;
-            int winograd;
-            int sgemm;
+            std::map<std::string, float> bias;
+            const std::map<std::string, std::string> &params;
         };    
 
         template <class T>
@@ -50,9 +61,9 @@ namespace sl
 
         virtual ~Layer() { }
 
-        virtual void Forward() { }
+        virtual void Forward(Tensor::Batch &input, Tensor::Batch &output) { }
 
-        virtual void Backward() { }
+        virtual void Backward(Tensor::Batch &input, Tensor::Batch &output) { }
 
     public:
         Type type;

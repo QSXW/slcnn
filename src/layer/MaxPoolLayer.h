@@ -1,13 +1,14 @@
 #pragma once
 
 #include "framework/Layer.h"
+#include "framework/Net.h"
 
 namespace sl
 {
-    class ReLuLayer : public Layer
+    class MaxPoolLayer : public Layer
     {
     public:
-        ReLuLayer(const Description &desc) : Layer{ Type::ReLu }
+        MaxPoolLayer(const Description &desc) : Layer{ Type::MaxPool }
         {
 
         }

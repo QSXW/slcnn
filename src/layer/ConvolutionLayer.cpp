@@ -4,12 +4,13 @@
 
 namespace sl
 {
-    void ConvolutionLayer::Forward()
+    void ConvolutionLayer::Forward(Tensor::Batch &input, Tensor::Batch &output)
     {
         
     }
 
-    void ConvolutionLayer::Backward()
+    void ConvolutionLayer::Backward(Tensor::Batch &input, Tensor::Batch &output)
     {
+
     }
 }

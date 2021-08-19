@@ -4,12 +4,12 @@
 
 namespace sl
 {
-    void ReLuLayer::Forward()
+    void ReLuLayer:: Forward(Tensor::Batch &input, Tensor::Batch &output)
     {
         
     }
 
-    void ReLuLayer::Backward()
+    void ReLuLayer::Backward(Tensor::Batch &input, Tensor::Batch &output)
     {
 
     }

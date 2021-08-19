@@ -23,6 +23,8 @@ set(LAYER_FILES
     src/layer/ConvolutionLayer.h
     src/layer/ReLuLayer.cpp
     src/layer/ReLuLayer.h
+    src/layer/MaxPoolLayer.cpp
+    src/layer/MaxPoolLayer.h
     )
 
 set(SRC_FILES

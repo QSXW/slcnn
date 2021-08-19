@@ -32,7 +32,7 @@ namespace sl
 		{
 			end = Clock::now();
 			auto duration = std::chrono::duration<double, DefaultResolution>(end - start);
-			fprintf(stdout, "...\nDuration: %.10g\n...\n", duration);
+			fprintf(stdout, "...\nDuration: %.10g\n...\n", duration.count());
 		}
 
 	private:

@@ -6,3 +6,4 @@
 #include "layer/BatchNormLayer.h"
 #include "layer/ConvolutionLayer.h"
 #include "layer/ReLuLayer.h"
+#include "layer/MaxPoolLayer.h"

@@ -14,17 +14,17 @@ namespace Helper
         float c = 1.0 / (static_cast<unsigned char>(~0));
         {
             Timer t{ __FILE__, __LINE__, __func__ };
-#if 0
+#if 1
             auto constant = _mm256_set1_ps(c);
 
             for (int i = 0; i < size; i += 16, dst += 16)
             {
-                auto u8h = _mm_loadu_epi8(src + i);
-                auto u8l = _mm_shuffle_epi32(u8h, 0b1110);
+                auto u8h      = _mm_loadu_epi8(src + i);
+                auto u8l      = _mm_shuffle_epi32(u8h, 0b1110);
                 auto u8tou321 = _mm256_cvtepi8_epi32(u8h);
                 auto u8tou322 = _mm256_cvtepi8_epi32(u8l);
-                auto ps1 = _mm256_cvtepi32_ps(u8tou321);
-                auto ps2 = _mm256_cvtepi32_ps(u8tou322);
+                auto ps1      = _mm256_cvtepi32_ps(u8tou321);
+                auto ps2      = _mm256_cvtepi32_ps(u8tou322);
 
                 ps1 = _mm256_mul_ps(ps1, constant);
                 ps2 = _mm256_mul_ps(ps1, constant);
@@ -39,6 +39,12 @@ namespace Helper
             }
 #endif
         }
+    }
+
+    template <class T>
+    inline constexpr void Clear(T *mem, size_t size, T value = 0)
+    {
+        memset(mem, value, sizeof(T) * size);
     }
 };
 };

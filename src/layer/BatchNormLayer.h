@@ -12,9 +12,9 @@ namespace sl
 
         }
 
-        virtual void Forward() override;
+        virtual void Forward(Tensor::Batch &input, Tensor::Batch &output) override;
 
-        virtual void Backward() override;
+        virtual void Backward(Tensor::Batch &input, Tensor::Batch &output) override;
 
     private:
         

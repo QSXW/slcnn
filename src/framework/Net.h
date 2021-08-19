@@ -4,9 +4,9 @@
 #include <memory>
 #include <cassert>
 
-#include "Layer.h"
 #include "Timer.h"
 #include "Tensor.h"
+#include "Layer.h"
 
 namespace sl
 {
@@ -25,28 +25,23 @@ namespace sl
 
         ~Net();
 
+        void Set(Tensor::Batch &&batch);
+
         void Train();
 
-    void Forward()
-    {
-        for (auto &layer : layers)
-        {
-            layer->Forward();
-        }
-    }
+    /*
+     * @brief inline function => never extern
+     *
+     */
+    private:
+        void Forward();
 
-    void Net::Backward()
-    {
-        for (int i = layers.size() - 1; i >= 0; --i)
-        {
-            layers[i]->Forward();
-        }
-    }
+        void Backward();
 
     private:
         LayerList layers;
 
-        Tensor input;
-        Tensor output;
+        Tensor::Batch input;
+        Tensor::Batch output;
     };
 }
