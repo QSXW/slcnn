@@ -10,6 +10,10 @@ set(FRAMEWORK_FILES
     src/framework/Layer.h
     src/framework/Net.cpp
     src/framework/Net.h
+    src/framework/Tensor.cpp
+    src/framework/Tensor.h
+    src/framework/Map.h
+    src/framework/Helper.h
 )
 
 set(LAYER_FILES

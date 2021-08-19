@@ -9,6 +9,23 @@
 
 namespace sl
 {
+    float Net::RKernel[] = {
+        -0.30, -0.21,  0.07, -0.19,  0.10, -0.01, -0.04, -0.02,  0.08,
+         0.14, -0.03,  0.31,  0.14,  0.11,  0.12,  0.21, -0.31, -0.23,
+         -0.03, 0.24, -0.05,  0.01, -0.02,  0.07,  0.30,  0.38,  0.19,
+         
+    };
+
+    float Net::Gkernel[] = {
+        -0.20, -0.13, -0.16, -0.09,  0.18,  0.20, -0.22, -0.01, -0.04,
+        -0.04, -0.26, -0.12,  0.21, -0.02,  0.12, -0.13,  0.04, -0.14,
+    };
+
+    float Net::BKernel[] = {
+        0.00, -0.12, -0.08,  0.13, 0.19,  0.10, -0.09,  0.13,  0.06,
+        0.32, -0.14,  0.08, -0.04, 0.16,  0.12,  0.14, -0.22, -0.07
+    };
+
     std::shared_ptr<Net> Net::CreateNet()
     {
         return std::shared_ptr<Net>();
@@ -38,19 +55,11 @@ namespace sl
         
     }
 
-    void Net::Forward()
+    void Net::Train()
     {
+        Timer t{ __FILE__, __LINE__, __func__ };
         assert(!layers.empty() && "There is no available Layer");
-        
-        {
-            Timer timer;
-            for (auto &layer : layers)
-            {
-                layer->Forward();
-            }
-        }
-    }
-    void Net::Backward()
-    {
+        Forward();
+        Backward();
     }
 };

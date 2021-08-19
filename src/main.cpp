@@ -11,8 +11,8 @@ int main()
         { Layer::Type::ReLu, 10, 20 }
     }};
 
-    net.Forward();
-    net.Backward();
+    unsigned char *c = new unsigned char[19200 * 10800];
 
+    net.Train();
     return 0;
 }
