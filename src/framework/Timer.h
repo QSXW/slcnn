@@ -5,6 +5,12 @@
 
 namespace sl
 {
+#if defined( _DEBUG ) || defined( DEBUG )
+#    define TIME_SUPERVISED Timer t{ __FILE__, __LINE__, __func__ };
+#else
+#    define	TIME_SUPERVISED
+#endif
+
     class Timer
     {
 	public:

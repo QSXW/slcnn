@@ -86,7 +86,7 @@ namespace sl
 
     void Net::Train()
     {
-        Timer t{ __FILE__, __LINE__, __func__ };
+        TIME_SUPERVISED
         assert(!layers.empty() && "There is no available Layer");
         Forward();
         Backward();

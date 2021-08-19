@@ -24,7 +24,7 @@ int main()
         { Layer::Type::Softmax }
     } };
 
-    net.Set(Tensor::Batch{ Tensor::TestCase });
+    net.Set(Tensor::Batch{ Tensor::TestCase, Tensor::TestCase, Tensor::TestCase });
     net.Train();
     return 0;
 }

@@ -13,7 +13,7 @@ namespace Helper
     {
         float c = 1.0 / (static_cast<unsigned char>(~0));
         {
-            Timer t{ __FILE__, __LINE__, __func__ };
+            TIME_SUPERVISED
 #if 1
             auto constant = _mm256_set1_ps(c);
 
