@@ -61,6 +61,25 @@ namespace Helper
     {
         return size + align - (size & (align - 1));
     }
+
+    static inline void AddBias(float *dst, float bias, size_t size)
+    {
+        for (size_t i = 0; i < size; i++)
+        {
+            dst[i] += bias;
+        }
+    }
+
+    static inline void AddBiasAVX2(float *dst, float bias, size_t size)
+    {
+        auto BIAS = _mm256_set1_ps(bias);
+        for (size_t i = 0; i < size; i += 8, dst += 8)
+        {
+            auto DST  = _mm256_load_ps(dst);
+            auto RES  = _mm256_add_ps(DST, BIAS);
+            _mm256_store_ps(dst, RES);
+        }
+    }
 };
 
 namespace BasicLinearAlgebraSubprograms

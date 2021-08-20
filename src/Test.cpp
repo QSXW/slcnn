@@ -11,6 +11,8 @@
 
 #include "framework/Timer.h"
 
+#include "sl.h"
+
 using namespace ::sl;
 
 namespace Test
@@ -121,12 +123,12 @@ namespace Check
     bool ScalarAlphaXPlusY()
     {
         constexpr size_t n = 1024;
-        float *x = new float[n * n];
+        
+        float *x  = sl_aligned_malloc<float>(n * n, 2);
+        float *y1 = sl_aligned_malloc<float>(n * n, 2);
+        float *y2 = sl_aligned_malloc<float>(n * n, 2);
 
         Test::RandomBuffer<float, n, n>(x);
-
-        float *y1 = new float[n * n];
-        float *y2 = new float[n * n];
 
         {
             Timer timer{ "BasicLinearAlgebraSubprograms::ScalarAlphaXPlusY\t", __LINE__, __func__ };
@@ -137,18 +139,24 @@ namespace Check
             BasicLinearAlgebraSubprograms::ScalarAlphaXPlusYAVX2(y2, x, 0.1114f, n * n);
         }
 
-        return Test::CompareFloatingPointSequence<n, n>(y1, y2);
+        auto ret = Test::CompareFloatingPointSequence<n, n>(y1, y2);
+
+        sl_aligned_free(x);
+        sl_aligned_free(y1);
+        sl_aligned_free(y2);
+
+        return ret;
     }
 
     bool Scale()
     {
         constexpr size_t n = 1024;
-        float *x = new float[n * n];
+
+        float *x  = sl_aligned_malloc<float>(n * n, 2);
+        float *y1 = sl_aligned_malloc<float>(n * n, 2);
+        float *y2 = sl_aligned_malloc<float>(n * n, 2);
 
         Test::RandomBuffer<float, n, n>(x);
-
-        float *y1 = new float[n * n];
-        float *y2 = new float[n * n];
 
         memcpy(y1, x, n * n);
         memcpy(y2, x, n * n);
@@ -162,7 +170,44 @@ namespace Check
             BasicLinearAlgebraSubprograms::ScaleAVX2(y2, 0.1114f, n * n);
         }
 
-        return Test::CompareFloatingPointSequence<n, n>(y1, y2);
+        auto ret = Test::CompareFloatingPointSequence<n, n>(y1, y2);
+
+        sl_aligned_free(x);
+        sl_aligned_free(y1);
+        sl_aligned_free(y2);
+
+        return ret;
+    }
+
+    bool AddBias()
+    {
+        constexpr size_t n = 1024;
+        
+        float *x  = sl_aligned_malloc<float>(n * n, 2);
+        float *y1 = sl_aligned_malloc<float>(n * n, 2);
+        float *y2 = sl_aligned_malloc<float>(n * n, 2);
+
+        Test::RandomBuffer<float, n, n>(x);
+
+        memcpy(y1, x, n * n);
+        memcpy(y2, x, n * n);
+
+        {
+            Timer timer{ "Helper::AddBias\t", __LINE__, __func__ };
+            BasicLinearAlgebraSubprograms::Scale(y1, 0.1114f, n * n);
+        }
+        {
+            Timer timer{ "Helper::AddBiasAVX2\t", __LINE__, __func__ };
+            BasicLinearAlgebraSubprograms::ScaleAVX2(y2, 0.1114f, n * n);
+        }
+
+        auto ret = Test::CompareFloatingPointSequence<n, n>(y1, y2);
+
+        sl_aligned_free(x);
+        sl_aligned_free(y1);
+        sl_aligned_free(y2);
+
+        return ret;
     }
 }
 
@@ -173,6 +218,7 @@ namespace Test
         { "im2col",            { false, Check::Image2Columns } },
         { "ScalarAlphaXPlusY", { false, Check::ScalarAlphaXPlusY } },
         { "Scale",             { false, Check::Scale } },
+        { "AddBias",           { false, Check::AddBias } },
         { "Fail",              { false, Check::Fail } }
     };
 
