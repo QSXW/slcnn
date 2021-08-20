@@ -7,6 +7,7 @@
 
 #include "Map.h"
 #include "Tensor.h"
+#include "Batch.h"
 
 namespace sl
 {
@@ -20,7 +21,7 @@ namespace sl
             None,
             Convolution,
             BatchNormalize,
-            ReLu,
+            Activation,
             MaxPool,
             Flatten,
             Softmax
@@ -61,9 +62,9 @@ namespace sl
 
         virtual ~Layer() { }
 
-        virtual void Forward(Tensor::Batch &input, Tensor::Batch &output) { }
+        virtual void Forward(Batch &input, Batch &output) { }
 
-        virtual void Backward(Tensor::Batch &input, Tensor::Batch &output) { }
+        virtual void Backward(Batch &input, Batch &output) { }
 
     public:
         Type type;

@@ -12,6 +12,8 @@ set(FRAMEWORK_FILES
     src/framework/Net.h
     src/framework/Tensor.cpp
     src/framework/Tensor.h
+    src/framework/Batch.cpp
+    src/framework/Batch.h
     src/framework/Map.h
     src/framework/Helper.h
 )
@@ -21,8 +23,8 @@ set(LAYER_FILES
     src/layer/BatchNormLayer.h
     src/layer/ConvolutionLayer.cpp
     src/layer/ConvolutionLayer.h
-    src/layer/ReLuLayer.cpp
-    src/layer/ReLuLayer.h
+    src/layer/ActivationLayer.cpp
+    src/layer/ActivationLayer.h
     src/layer/MaxPoolLayer.cpp
     src/layer/MaxPoolLayer.h
     )
@@ -30,6 +32,8 @@ set(LAYER_FILES
 set(SRC_FILES
     src/slcnn.h
     src/main.cpp
+    src/Test.cpp
+    src/Test.h
 )
 
 set(PROJECT_FILES

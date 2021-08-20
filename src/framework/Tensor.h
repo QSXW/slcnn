@@ -8,9 +8,6 @@ namespace sl
     class Tensor
     {
     public:
-        using Batch = std::vector<Tensor>;
-
-    public:
         Tensor() = default;
 
         Tensor(float *data, int x, int y, int z = 1);
@@ -26,11 +23,18 @@ namespace sl
 
         void Reshape(int x, int y, int z);
 
+        auto &operator[](size_t index)
+        {
+            return data.get()[index];
+        }
+
     public:
         int width{ 0 };
         int height{ 0 };
         int axis{ 3 };
-        int rank{ 0 };
+        int depth{ 0 };
+        size_t size{ 0 };
+
         std::shared_ptr<float> data;
 
         static Tensor Tensor::TestCase;

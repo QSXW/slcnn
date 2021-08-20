@@ -1,7 +1,7 @@
 #pragma once
 
 #include <immintrin.h>
-
+#include <algorithm>
 #include "Timer.h"
 
 namespace sl
@@ -11,7 +11,7 @@ namespace Helper
     template <class T>
     inline constexpr void Normalize(T *src, float *dst, size_t size)
     {
-        float c = 1.0 / (static_cast<unsigned char>(~0));
+        float c = 1.0 / (static_cast<T>(~0));
         {
             TIME_SUPERVISED
 #if 1
@@ -45,6 +45,16 @@ namespace Helper
     inline constexpr void Clear(T *mem, size_t size, T value = 0)
     {
         memset(mem, value, sizeof(T) * size);
+    }
+
+    static std::string ToLower(std::string s) {
+        std::transform(s.begin(), s.end(), s.begin(), 
+            [](unsigned char c)
+            {
+                return std::tolower(c);
+            }
+        );
+        return s;
     }
 };
 };

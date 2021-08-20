@@ -31,7 +31,7 @@ namespace sl
 		Timer(const char *file, int line, const char *func)
 		{
 			start = Clock::now();
-			fprintf(stdout, "Running => %s  at  %d  in  %s", file, line, func);
+			fprintf(stdout, "Running => %s  at  %d  in  %s\n", file, line, func);
 		}
 
 		virtual ~Timer()

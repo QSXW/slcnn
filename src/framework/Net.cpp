@@ -4,7 +4,7 @@
 
 #include "layer/ConvolutionLayer.h"
 #include "layer/BatchNormLayer.h"
-#include "layer/ReLuLayer.h"
+#include "layer/ActivationLayer.h"
 #include "layer/MaxPoolLayer.h"
 #include "Timer.h"
 
@@ -44,9 +44,9 @@ namespace sl
             {
                 layers.emplace_back(Layer::Create<BatchNormLayer>(desc));
             }
-            if (desc.Type == Layer::Type::ReLu)
+            if (desc.Type == Layer::Type::Activation)
             {
-                layers.emplace_back(Layer::Create<ReLuLayer>(desc));
+                layers.emplace_back(Layer::Create<ActivationLayer>(desc));
             }
             if (desc.Type == Layer::Type::MaxPool)
             {
@@ -76,12 +76,12 @@ namespace sl
         }
     }
 
-    void Net::Set(Tensor::Batch &&batch)
+    void Net::Set(Batch &&batch)
     {
         assert(!batch.empty() && "dataset could not be none!");
         input = std::move(batch);
         fprintf(stdout, "Set dataset for Network: width => %d, height => %d, channel => %d, batch size = %lld\n",
-                input[0].width, input[0].height, input[0].rank, input.size());
+                input[0].width, input[0].height, input[0].depth, input.size());
     }
 
     void Net::Train()

@@ -2,8 +2,11 @@
 
 #include "framework/Net.h"
 #include "framework/Layer.h"
+#include "framework/Tensor.h"
+#include "framework/Batch.h"
+#include "framework/Timer.h"
 
 #include "layer/BatchNormLayer.h"
 #include "layer/ConvolutionLayer.h"
-#include "layer/ReLuLayer.h"
+#include "layer/ActivationLayer.h"
 #include "layer/MaxPoolLayer.h"

@@ -11,16 +11,18 @@ namespace sl
     {
         this->data.reset(data);
 
+        size = static_cast<size_t>(x) * static_cast<size_t>(y) * static_cast<size_t>(z);
         width  = x;
         height = y;
-        rank   = z;
+        depth  = z;
     }
 
     Tensor::Tensor(const Tensor &other) :
         width{ other.width },
         height{ other.height },
         axis{ other.axis },
-        rank{ other.rank },
+        depth{ other.depth },
+        size{ other.size },
         data{ other.data }
     {
         
@@ -34,42 +36,41 @@ namespace sl
     template <class T>
     Tensor::Tensor(T *data, int x, int y, int z, bool normalize)
     {
-        static_assert(std::is_arithmetic_v<T> && "Only support arithmetic type");
-
-        auto size = x * y * z;
+        size = static_cast<size_t>(x) * static_cast<size_t>(y) * static_cast<size_t>(z);
         this->data.reset(new float[size]);
 
-        if (normalize)
+        if (normalize && std::is_integral_v<T>)
         {
             Helper::Normalize(data, this->data.get(), size);
         }
 
         width  = x;
         height = y;
-        rank   = z;
+        depth  = z;
     }
 
     Tensor::Tensor(int x, int y, int z) :
         width{ x },
         height{ y },
-        rank{ z }
+        depth{ z }
     {
-        auto size = x * y * z;
+        size = static_cast<size_t>(x) * static_cast<size_t>(y) * static_cast<size_t>(z);
         data.reset(new float[size]);
         Helper::Clear(data.get(), size);
     }
 
     void Tensor::Reshape(int x, int y, int z)
     {
-        assert((x * y * z) > (width * height * rank) && "Reshape to one dimentions but out of range");
+        assert((x * y * z) > size && "Reshape to one dimentions but out of range");
 
         /*
          * @brief In memory, all data are constinuous. Not need to change.
          * 
          */
+        size = static_cast<size_t>(x) * static_cast<size_t>(y) * static_cast<size_t>(z);
         width  = x;
         height = y;
-        rank   = z;
+        depth  = z;
     }
 
     Tensor Tensor::TestCase {

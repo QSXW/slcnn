@@ -25,7 +25,7 @@ namespace sl
 
         ~Net();
 
-        void Set(Tensor::Batch &&batch);
+        void Set(Batch &&batch);
 
         void Train();
 
@@ -41,7 +41,7 @@ namespace sl
     private:
         LayerList layers;
 
-        Tensor::Batch input;
-        Tensor::Batch output;
+        Batch input;
+        Batch output;
     };
 }
