@@ -44,6 +44,11 @@ namespace sl
             return pool.size();
         }
 
+        void push_back(Tensor &&value)
+        {
+            pool.push_back(value);
+        }
+
     public:
         std::vector<Tensor> pool;
     };

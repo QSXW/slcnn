@@ -10,7 +10,7 @@ int main()
     Test::Launch();
 
     Net net{ {
-        { Layer::Type::Convolutional, DataSet::Bias::CONV1_1 },
+        { Layer::Type::Convolutional, DataSet::Bias::CONV1_1, {{ "KernelSize", "3" }} },
         { Layer::Type::BatchNormalize  },
         { Layer::Type::Activation, {}, {{ "Activation", "ReLu" }} },
         { Layer::Type::Convolutional, DataSet::Bias::CONV1_1 },
@@ -29,6 +29,9 @@ int main()
     } };
 
     net.Set(Batch{ Tensor::TestCase, Tensor::TestCase, Tensor::TestCase });
+
+    auto t = Tensor::TestCase.IM2Col(3);
+
     net.Train();
     return 0;
 }

@@ -71,11 +71,6 @@ namespace sl
     {
         assert((static_cast<size_t>(x) * static_cast<size_t>(y) * static_cast<size_t>(z)) > size &&
                 "Reshape to one dimentions but out of range");
-
-        /*
-         * @brief In memory, all data are constinuous. Not need to change.
-         * 
-         */
         size = static_cast<size_t>(x) * static_cast<size_t>(y) * static_cast<size_t>(z);
         width  = x;
         height = y;
@@ -85,16 +80,17 @@ namespace sl
     Tensor Tensor::IM2Col(int ksize, int stride, int pad)
     {
         Tensor &src = *this;
-        Tensor dst{ src.width, src.width * ksize, this->depth };
 
         int outHeight = (src.height + 2 * pad - ksize) / stride + 1;
         int outWidth  = (src.width  + 2 * pad - ksize) / stride + 1;
 
+        Tensor dst{ outWidth * outHeight, ksize * ksize, this->depth };
+
         auto dstptr = dst.data.get();
         auto srcptr = src.data.get();
 
-        int channelsCol = src.depth * ksize * ksize;
-        for (int i = 0; i < channelsCol; i++)
+        int depthCol = src.depth * ksize * ksize;
+        for (int i = 0; i < depthCol; i++)
         {
             int widthOffset  = i % ksize;
             int heightOffset = (i / ksize) % ksize;
@@ -114,6 +110,11 @@ namespace sl
         }
 
         return dst;
+    }
+
+    Tensor Tensor::GEMM()
+    {
+        return Tensor{};
     }
 
     Tensor Tensor::TestCase {

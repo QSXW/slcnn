@@ -22,7 +22,7 @@ namespace sl
 
         static inline int ALIGN_NUM{ 32 };
 
-        static Tensor Tensor::TestCase;
+        static Tensor Tensor::TestCase; 
 
     public:
         Tensor() = default;
@@ -41,6 +41,8 @@ namespace sl
         void Reshape(int x, int y, int z);
 
         Tensor IM2Col(int ksize, int stride = 1, int pad = 0);
+
+        Tensor GEMM();
 
         void Display()
         {
