@@ -19,7 +19,7 @@ namespace sl
         enum class Type
         {
             None,
-            Convolution,
+            Convolutional,
             BatchNormalize,
             Activation,
             MaxPool,

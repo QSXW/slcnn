@@ -4,10 +4,10 @@
 
 namespace sl
 {
-    class ConvolutionLayer : public Layer
+    class ConvolutionalLayer : public Layer
     {
     public:
-        ConvolutionLayer(const Description &desc) : Layer{ Type::Convolution }
+        ConvolutionalLayer(const Description &desc) : Layer{ Type::Convolutional }
         {
 
         }

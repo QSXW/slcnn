@@ -1,2 +1,2 @@
 # slcnn
-A Convolution Neural Network Demo
+A Convolutional Neural Network Demo

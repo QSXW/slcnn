@@ -7,6 +7,6 @@
 #include "framework/Timer.h"
 
 #include "layer/BatchNormLayer.h"
-#include "layer/ConvolutionLayer.h"
+#include "layer/ConvolutionalLayer.h"
 #include "layer/ActivationLayer.h"
 #include "layer/MaxPoolLayer.h"

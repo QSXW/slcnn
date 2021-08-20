@@ -27,8 +27,8 @@ set(FRAMEWORK_FILES
 set(LAYER_FILES
     src/layer/BatchNormLayer.cpp
     src/layer/BatchNormLayer.h
-    src/layer/ConvolutionLayer.cpp
-    src/layer/ConvolutionLayer.h
+    src/layer/ConvolutionalLayer.cpp
+    src/layer/ConvolutionalLayer.h
     src/layer/ActivationLayer.cpp
     src/layer/ActivationLayer.h
     src/layer/MaxPoolLayer.cpp

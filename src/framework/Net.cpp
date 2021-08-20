@@ -2,7 +2,7 @@
 
 #include <cassert>
 
-#include "layer/ConvolutionLayer.h"
+#include "layer/ConvolutionalLayer.h"
 #include "layer/BatchNormLayer.h"
 #include "layer/ActivationLayer.h"
 #include "layer/MaxPoolLayer.h"
@@ -36,9 +36,9 @@ namespace sl
     {
         for (auto &desc : descs)
         {
-            if (desc.Type == Layer::Type::Convolution)
+            if (desc.Type == Layer::Type::Convolutional)
             {
-                layers.emplace_back(Layer::Create<ConvolutionLayer>(desc));
+                layers.emplace_back(Layer::Create<ConvolutionalLayer>(desc));
             }
             if (desc.Type == Layer::Type::BatchNormalize)
             {

@@ -10,17 +10,17 @@ int main()
     Test::Launch();
 
     Net net{ {
-        { Layer::Type::Convolution, DataSet::Bias::CONV1_1 },
+        { Layer::Type::Convolutional, DataSet::Bias::CONV1_1 },
         { Layer::Type::BatchNormalize  },
         { Layer::Type::Activation, {}, {{ "Activation", "ReLu" }} },
-        { Layer::Type::Convolution, DataSet::Bias::CONV1_1 },
+        { Layer::Type::Convolutional, DataSet::Bias::CONV1_1 },
         { Layer::Type::BatchNormalize  },
         { Layer::Type::Activation, {}, {{ "Activation", "ReLu" }} },
         { Layer::Type::MaxPool },
-        { Layer::Type::Convolution, DataSet::Bias::CONV2_1 },
+        { Layer::Type::Convolutional, DataSet::Bias::CONV2_1 },
         { Layer::Type::BatchNormalize  },
         { Layer::Type::Activation, {}, {{ "Activation", "ReLu" }} },
-        { Layer::Type::Convolution, DataSet::Bias::CONV2_2 },
+        { Layer::Type::Convolutional, DataSet::Bias::CONV2_2 },
         { Layer::Type::BatchNormalize  },
         { Layer::Type::Activation, {}, {{ "Activation", "ReLu" }} },
         { Layer::Type::MaxPool },
