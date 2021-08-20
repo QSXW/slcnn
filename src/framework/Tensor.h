@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <vector>
+#include <string>
 
 #include "Helper.h"
 #include "sl.h"
@@ -38,6 +39,17 @@ namespace sl
         Tensor(int x, int y, int z = 1);
 
         void Reshape(int x, int y, int z);
+
+        Tensor IM2Col(int ksize, int stride = 1, int pad = 0);
+
+        void Display()
+        {
+            for (int i = 0; i < depth; i++)
+            {
+                auto tips = std::string("channel ") + std::to_string(i);
+                Helper::DisplayMatrix<float>(data.get(), width, height, width, tips.c_str());
+            }
+        }
 
         auto &operator[](size_t index)
         {

@@ -17,6 +17,28 @@ using namespace ::sl;
 
 namespace Test
 {
+    template <class T, int row, int col, int flag>
+    inline constexpr void DisplayMatrix(T * m, const char *tips)
+    {
+        printf("%s\n", tips);
+        for (int i = 0; i < row * col; i++)
+        {
+            if (i && i % flag == 0)
+            {
+                putchar(10);
+            }
+            if constexpr (std::is_integral_v<T>)
+            {
+                printf("%4d", m[i]);
+            }
+            if constexpr (std::is_floating_point_v<T>)
+            {
+                printf("%4g", m[i]);
+            }
+        }
+        printf("\n\n");
+    }
+
     template <class... Args>
     inline constexpr void Fail(const char *s, Args&&... args)
     {
@@ -115,9 +137,69 @@ namespace Check
         return Test::CompareFloatingPointSequence<4, 4>(def, ref);
     }
 
-    bool Image2Columns()
+    bool IM2Col()
     {
-        return true;
+        float SLALIGNED(32) a[] = {
+            0,  1,  2,  3,
+            4,  5,  6,  7,
+            8,  9,  10, 11,
+            12, 13, 14, 15,
+
+            0,  1,  2,  3,
+            4,  5,  6,  7,
+            8,  9,  10, 11,
+            12, 13, 14, 15,
+
+            0,  1,  2,  3,
+            4,  5,  6,  7,
+            8,  9,  10, 11,
+            12, 13, 14, 15
+        };
+
+        float SLALIGNED(32) ref[] = {
+            0,  1,  4,  5,
+            1,  2,  5,  6,
+            2,  3,  6,  7,
+            4,  5,  8,  9,
+            5,  6,  9,  10,
+            6,  7,  10, 11,
+            8,  9,  12, 13,
+            9,  10, 13, 14,
+            10, 11, 14, 15,
+
+            0,  1,  4,  5,
+            1,  2,  5,  6,
+            2,  3,  6,  7,
+            4,  5,  8,  9,
+            5,  6,  9,  10,
+            6,  7,  10, 11,
+            8,  9,  12, 13,
+            9,  10, 13, 14,
+            10, 11, 14, 15,
+
+            0,  1,  4,  5,
+            1,  2,  5,  6,
+            2,  3,  6,  7,
+            4,  5,  8,  9,
+            5,  6,  9,  10,
+            6,  7,  10, 11,
+            8,  9,  12, 13,
+            9,  10, 13, 14,
+            10, 11, 14, 15
+        };
+        
+        Tensor src{ a, 4, 4, 3 };
+        Tensor dst = src.IM2Col(3);
+
+        {
+            Timer timer{ "Tensor::IM2Col\t", __LINE__, __func__ };
+            Tensor dst = src.IM2Col(3);
+        }
+        src.Display();
+        dst.Display();
+        auto ret = Test::CompareFloatingPointSequence<4, 9>(dst.data.get(), ref);
+
+        return ret;
     }
 
     bool ScalarAlphaXPlusY()
@@ -215,7 +297,7 @@ namespace Test
 {
     static std::map<std::string, std::pair<bool, std::function<bool()>>> Benchmarks = {
         { "ReLu",              { false, Check::ReLu } },
-        { "im2col",            { false, Check::Image2Columns } },
+        { "IM2Col",            { false, Check::IM2Col } },
         { "ScalarAlphaXPlusY", { false, Check::ScalarAlphaXPlusY } },
         { "Scale",             { false, Check::Scale } },
         { "AddBias",           { false, Check::AddBias } },

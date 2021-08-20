@@ -9,6 +9,28 @@ namespace sl
 namespace Helper
 {
     template <class T>
+    inline constexpr void DisplayMatrix(T * m, int row, int col, int flag, const char *tips)
+    {
+        printf("%s\n", tips);
+        for (int i = 0; i < row * col; i++)
+        {
+            if (i && i % flag == 0)
+            {
+                putchar(10);
+            }
+            if constexpr (std::is_integral_v<T>)
+            {
+                printf("%4d", m[i]);
+            }
+            if constexpr (std::is_floating_point_v<T>)
+            {
+                printf("%4g", m[i]);
+            }
+        }
+        printf("\n\n");
+    }
+
+    template <class T>
     inline constexpr void Normalize(T *src, float *dst, size_t size)
     {
         float c = 1.0 / (static_cast<T>(~0));
@@ -78,6 +100,42 @@ namespace Helper
             auto DST  = _mm256_load_ps(dst);
             auto RES  = _mm256_add_ps(DST, BIAS);
             _mm256_store_ps(dst, RES);
+        }
+    }
+
+    static float IM2ColGetPixel(float *im, int width, int height, int channels, int col, int row, int channel, int pad)
+    {
+        col -= pad;
+        row -= pad;
+
+        if (row < 0 || col < 0 || row >= height || col >= width)
+        {
+            return 0;
+        }
+        return im[col + width * (row + height * channel)];
+    }
+
+    static void IM2Col(float *src, float *dst, int channels, int width,  int height, int ksize, int stride = 1, int pad = 0) 
+    {
+        int outHeight = (height + 2 * pad - ksize) / stride + 1;
+        int outWidth  = (width + 2 * pad - ksize) / stride + 1;
+
+        int channelsCol = channels * ksize * ksize;
+        for (int i = 0; i < channelsCol; i++)
+        {
+            int widthOffset  = i % ksize;
+            int heightOffset = (i / ksize) % ksize;
+            int srcChannel   = i / ksize / ksize;
+
+            for (int y = 0; y < outHeight; y++)
+            {
+                for (int x = 0; x < outWidth; x++)
+                {
+                    int srcX = widthOffset  + x * stride;
+                    int srcY = heightOffset + y * stride;
+                    dst[(i * outHeight + y) * outWidth + x] = IM2ColGetPixel(src, width, height, channels, srcX, srcY, srcChannel, pad);
+                }
+            }
         }
     }
 };
