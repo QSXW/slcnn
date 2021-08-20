@@ -2,8 +2,14 @@ cmake_minimum_required(VERSION 3.20)
 
 project(slcnn LANGUAGES CXX)
 
+set(CMAKE_VERBOSE_MAKEFILE True)
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+if (MSVC)
+    add_compile_options(/Zc:alignedNew)
+endif()
 
 set(FRAMEWORK_FILES
     src/framework/Layer.cpp
@@ -27,6 +33,8 @@ set(LAYER_FILES
     src/layer/ActivationLayer.h
     src/layer/MaxPoolLayer.cpp
     src/layer/MaxPoolLayer.h
+    src/layer/SoftmaxLayer.cpp
+    src/layer/SoftmaxLayer.h
     )
 
 set(SRC_FILES
@@ -50,3 +58,9 @@ add_executable(${PROJECT_NAME}
     ${PROJECT_FILES})
 
 target_include_directories(${PROJECT_NAME} PRIVATE src/)
+
+add_subdirectory(sl)
+
+target_link_libraries(${PROJECT_NAME}
+    sl
+)

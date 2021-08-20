@@ -5,6 +5,8 @@
 #include "Map.h"
 #include "Helper.h"
 
+#include "sl.h"
+
 namespace sl
 {
     Tensor::Tensor(float *data, int x, int y, int z)
@@ -37,7 +39,7 @@ namespace sl
     Tensor::Tensor(T *data, int x, int y, int z, bool normalize)
     {
         size = static_cast<size_t>(x) * static_cast<size_t>(y) * static_cast<size_t>(z);
-        this->data.reset(new float[size]);
+        this->data.reset(sl_aligned_malloc<float>(size, ALIGN_NUM), Deleter());
 
         if (normalize && std::is_integral_v<T>)
         {
@@ -55,7 +57,7 @@ namespace sl
         depth{ z }
     {
         size = static_cast<size_t>(x) * static_cast<size_t>(y) * static_cast<size_t>(z);
-        data.reset(new float[size]);
+        this->data.reset(sl_aligned_malloc<float>(size, ALIGN_NUM), Deleter());
         Helper::Clear(data.get(), size);
     }
 

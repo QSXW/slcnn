@@ -3,10 +3,26 @@
 #include <memory>
 #include <vector>
 
+#include "Helper.h"
+#include "sl.h"
+
 namespace sl
 {
     class Tensor
     {
+    public:
+        struct Deleter
+        {
+            void operator()(float *p)
+            {
+                sl_aligned_free(static_cast<void*>(p));
+            }
+        };
+
+        static inline int ALIGN_NUM{ 32 };
+
+        static Tensor Tensor::TestCase;
+
     public:
         Tensor() = default;
 
@@ -28,15 +44,17 @@ namespace sl
             return data.get()[index];
         }
 
+        void ScalarAlphaXPlusY(Tensor &x, float alpha, int INCX = 1, int INCY = 1)
+        {
+            BasicLinearAlgebraSubprograms::ScalarAlphaXPlusYAVX2(this->data.get(), x.data.get(), alpha, this->size, INCX, INCY);
+        }
+
     public:
         int width{ 0 };
         int height{ 0 };
         int axis{ 3 };
         int depth{ 0 };
         size_t size{ 0 };
-
         std::shared_ptr<float> data;
-
-        static Tensor Tensor::TestCase;
     };
 }

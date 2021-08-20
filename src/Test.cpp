@@ -130,11 +130,36 @@ namespace Check
 
         {
             Timer timer{ "BasicLinearAlgebraSubprograms::ScalarAlphaXPlusY\t", __LINE__, __func__ };
-            BasicLinearAlgebraSubprograms::ScalarAlphaXPlusY(y1, x, 0.1114f, 1024 * 1024);
+            BasicLinearAlgebraSubprograms::ScalarAlphaXPlusY(y1, x, 0.1114f, n * n);
         }
         {
             Timer timer{ "BasicLinearAlgebraSubprograms::ScalarAlphaXPlusYAVX2\t", __LINE__, __func__ };
-            BasicLinearAlgebraSubprograms::ScalarAlphaXPlusYAVX2(y2, x, 0.1114f, 1024 * 1024);
+            BasicLinearAlgebraSubprograms::ScalarAlphaXPlusYAVX2(y2, x, 0.1114f, n * n);
+        }
+
+        return Test::CompareFloatingPointSequence<n, n>(y1, y2);
+    }
+
+    bool Scale()
+    {
+        constexpr size_t n = 1024;
+        float *x = new float[n * n];
+
+        Test::RandomBuffer<float, n, n>(x);
+
+        float *y1 = new float[n * n];
+        float *y2 = new float[n * n];
+
+        memcpy(y1, x, n * n);
+        memcpy(y2, x, n * n);
+
+        {
+            Timer timer{ "BasicLinearAlgebraSubprograms::Scale\t", __LINE__, __func__ };
+            BasicLinearAlgebraSubprograms::Scale(y1, 0.1114f, n * n);
+        }
+        {
+            Timer timer{ "BasicLinearAlgebraSubprograms::ScaleAVX2\t", __LINE__, __func__ };
+            BasicLinearAlgebraSubprograms::ScaleAVX2(y2, 0.1114f, n * n);
         }
 
         return Test::CompareFloatingPointSequence<n, n>(y1, y2);
@@ -147,6 +172,7 @@ namespace Test
         { "ReLu",              { false, Check::ReLu } },
         { "im2col",            { false, Check::Image2Columns } },
         { "ScalarAlphaXPlusY", { false, Check::ScalarAlphaXPlusY } },
+        { "Scale",             { false, Check::Scale } },
         { "Fail",              { false, Check::Fail } }
     };
 

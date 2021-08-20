@@ -56,31 +56,54 @@ namespace Helper
         );
         return s;
     }
+
+    static inline size_t SafeBoundary(size_t size, size_t align = 32)
+    {
+        return size + align - (size & (align - 1));
+    }
 };
 
 namespace BasicLinearAlgebraSubprograms
 {
-    template <class T>
-    inline constexpr void ScalarAlphaXPlusY(T *y, T *x, T alpha, int size, int increamentX = 1, int incrementY = 1)
+    inline void ScalarAlphaXPlusY(float *y, float *x, float alpha, int size, int INCX = 1, int INCY = 1)
     {
         for (int i = 0; i < size; i++)
         {
-            y[i] += alpha * x[i];
+            y[i * INCY] += alpha * x[i * INCX];
         }
     }
 
-    inline void ScalarAlphaXPlusYAVX2(float *y, float *x, float alpha, int size, int incrementX = 1, int incrementY = 1)
+    inline void ScalarAlphaXPlusYAVX2(float *y, float *x, float alpha, int size, int INCX = 1, int INCY = 1)
     {
         auto A = _mm256_set1_ps(alpha);
         for (int i = 0; i < size; i += 8)
         {
-            auto Y = _mm256_loadu_ps(y + i * incrementY);
-            auto X = _mm256_loadu_ps(x + i * incrementX);
+            auto Y = _mm256_loadu_ps(y + i * INCY);
+            auto X = _mm256_loadu_ps(x + i * INCX);
             
             X = _mm256_mul_ps(X, A);
             Y = _mm256_add_ps(Y, X);
 
-            _mm256_storeu_ps(y + i * incrementY, Y);
+            _mm256_storeu_ps(y + i * INCY, Y);
+        }
+    }
+
+    inline void Scale(float *x, float alpha, int size, int INC = 1)
+    {
+        for (int i = 0; i < size; i++)
+        {
+            x[i * INC] *= alpha;
+        }
+    }
+
+    inline void ScaleAVX2(float *x, float alpha, int size, int INC = 1)
+    {
+        auto A = _mm256_set1_ps(alpha);
+        for (int i = 0; i < size; i += 8)
+        {
+            auto X = _mm256_loadu_ps(x + i * INC);
+            X = _mm256_mul_ps(X, A);
+            _mm256_storeu_ps(x + i * INC, X);
         }
     }
 };
