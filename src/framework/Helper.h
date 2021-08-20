@@ -47,7 +47,7 @@ namespace Helper
         memset(mem, value, sizeof(T) * size);
     }
 
-    static std::string ToLower(std::string s) {
+    static inline std::string ToLower(std::string s) {
         std::transform(s.begin(), s.end(), s.begin(), 
             [](unsigned char c)
             {
@@ -55,6 +55,33 @@ namespace Helper
             }
         );
         return s;
+    }
+};
+
+namespace BasicLinearAlgebraSubprograms
+{
+    template <class T>
+    inline constexpr void ScalarAlphaXPlusY(T *y, T *x, T alpha, int size, int increamentX = 1, int incrementY = 1)
+    {
+        for (int i = 0; i < size; i++)
+        {
+            y[i] += alpha * x[i];
+        }
+    }
+
+    inline void ScalarAlphaXPlusYAVX2(float *y, float *x, float alpha, int size, int incrementX = 1, int incrementY = 1)
+    {
+        auto A = _mm256_set1_ps(alpha);
+        for (int i = 0; i < size; i += 8)
+        {
+            auto Y = _mm256_loadu_ps(y + i * incrementY);
+            auto X = _mm256_loadu_ps(x + i * incrementX);
+            
+            X = _mm256_mul_ps(X, A);
+            Y = _mm256_add_ps(Y, X);
+
+            _mm256_storeu_ps(y + i * incrementY, Y);
+        }
     }
 };
 };

@@ -28,7 +28,7 @@ namespace Test
         printf(s, std::forward<Args>(args)...);
     }
 
-    inline bool CompareFloatingPoint(float a, float b, float epsilon = 0.01f)
+    inline bool CompareFloatingPoint(float a, float b, float epsilon = 0.01f, int index = 0)
     {
         float diff = fabsf(a - b);
 
@@ -36,8 +36,8 @@ namespace Test
         {
             return true;
         }
-        Fail( "Test failed comparing %g with %g (abs diff=%g with epsilon=%g)\n", a, b, diff, epsilon);
-
+        Fail("Test failed comparing %.10g with %.10g (abs diff=%.10g with epsilon=%.10g)\n"
+             "Index => %d\n\n", a, b, diff, epsilon, index);
         return false;
     }
 
@@ -73,7 +73,7 @@ namespace Test
     template <class T, size_t rows, size_t cols>
     inline constexpr void RandomBuffer(T *buffer)
     {
-        auto size = rows * cols * sizeof(T);
+        auto size = rows * cols;
         for (int i = 0; i < size; i++)
         {
             buffer[i] = (T)(rand() & 0xFF);
@@ -85,7 +85,7 @@ namespace Test
     {
         for (size_t i = 0, length = rows * cols; i < length; i++)
         {
-            if (!CompareFloatingPoint(a[i], b[i], epsilon))
+            if (!CompareFloatingPoint(a[i], b[i], epsilon, i))
             {
                 return false;
             }
@@ -96,6 +96,11 @@ namespace Test
 
 namespace Check
 {
+    bool Fail()
+    {
+        return false;
+    }
+
     bool ReLu()
     {
         float def[4 * 4] = { -1, -1, 1, 1, 2, 2, -2, -2, -3, -3, 3, 3, 4, 4, -4, -4 };
@@ -110,16 +115,39 @@ namespace Check
 
     bool Image2Columns()
     {
-        return false;
+        return true;
+    }
+
+    bool ScalarAlphaXPlusY()
+    {
+        constexpr size_t n = 1024;
+        float *x = new float[n * n];
+
+        Test::RandomBuffer<float, n, n>(x);
+
+        float *y1 = new float[n * n];
+        float *y2 = new float[n * n];
+
+        {
+            Timer timer{ "BasicLinearAlgebraSubprograms::ScalarAlphaXPlusY\t", __LINE__, __func__ };
+            BasicLinearAlgebraSubprograms::ScalarAlphaXPlusY(y1, x, 0.1114f, 1024 * 1024);
+        }
+        {
+            Timer timer{ "BasicLinearAlgebraSubprograms::ScalarAlphaXPlusYAVX2\t", __LINE__, __func__ };
+            BasicLinearAlgebraSubprograms::ScalarAlphaXPlusYAVX2(y2, x, 0.1114f, 1024 * 1024);
+        }
+
+        return Test::CompareFloatingPointSequence<n, n>(y1, y2);
     }
 }
 
 namespace Test
 {
-    
     static std::map<std::string, std::pair<bool, std::function<bool()>>> Benchmarks = {
-        { "ReLu",   { false, Check::ReLu } },
-        { "im2col", { false, Check::Image2Columns} }
+        { "ReLu",              { false, Check::ReLu } },
+        { "im2col",            { false, Check::Image2Columns } },
+        { "ScalarAlphaXPlusY", { false, Check::ScalarAlphaXPlusY } },
+        { "Fail",              { false, Check::Fail } }
     };
 
     int Launch()
@@ -128,20 +156,31 @@ namespace Test
         TIME_SUPERVISED
         int sum  = 0;
         int fail = 0;
-        for (const auto &b : Benchmarks)
+        for (auto &b : Benchmarks)
         {
             sum++;
             auto &[name,  props] = b;
-            auto  [passed, func] = props;
+            auto &[passed, func] = props;
 
             passed = func();
+            if (!passed)
+            {
+                fail++;
+            }
+        }
+
+        for (auto &b : Benchmarks)
+        {
+            auto &[name,  props] = b;
+            auto &[passed, func] = props;
+
             if (passed)
             {
                 fprintf(stdout, "\033[1;33mTest: %s\033[0m\t=> [  \033[0;32;32mOK\033[0m  ]\n", name.c_str());
             }
             else
             {
-                fail++;
+                
                 fprintf(stdout, "\033[1;33mTest: %s\033[0m\t=> [ \033[1;31;40mFail\033[0m ]\n", name.c_str());
             }
         }

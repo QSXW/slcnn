@@ -61,7 +61,8 @@ namespace sl
 
     void Tensor::Reshape(int x, int y, int z)
     {
-        assert((x * y * z) > size && "Reshape to one dimentions but out of range");
+        assert((static_cast<size_t>(x) * static_cast<size_t>(y) * static_cast<size_t>(z)) > size &&
+                "Reshape to one dimentions but out of range");
 
         /*
          * @brief In memory, all data are constinuous. Not need to change.

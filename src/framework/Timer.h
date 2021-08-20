@@ -28,17 +28,17 @@ namespace sl
 			fprintf(stdout, "Timer Start\n");
 		}
 
-		Timer(const char *file, int line, const char *func)
+		Timer(const char *file, const int line, const char *func)
 		{
 			start = Clock::now();
-			fprintf(stdout, "Running => %s  at  %d  in  %s\n", file, line, func);
+			fprintf(stdout, "\nRunning => %s  at  %d  in  %s\n", file, line, func);
 		}
 
 		virtual ~Timer()
 		{
 			end = Clock::now();
 			auto duration = std::chrono::duration<double, DefaultResolution>(end - start);
-			fprintf(stdout, "...\nDuration: %.10g\n...\n", duration.count());
+			fprintf(stdout, "Duration: %.10gs\n\n", duration.count());
 		}
 
 	private:
