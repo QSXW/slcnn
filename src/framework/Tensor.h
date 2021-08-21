@@ -40,16 +40,20 @@ namespace sl
 
         void Reshape(int x, int y, int z);
 
+        void ExtendRow(const float *data, int x, int y);
+
+        void PushChannel(Tensor &channel, int index);
+
         Tensor IM2Col(int ksize, int stride = 1, int pad = 0);
 
-        void GEMM(Tensor &kernel);
+        void GEMM(Tensor &a, Tensor &b);
 
         void Display()
         {
             for (int i = 0; i < depth; i++)
             {
                 auto tips = std::string("channel ") + std::to_string(i);
-                Helper::DisplayMatrix<float>(data.get(), width, height, width, tips.c_str());
+                Helper::DisplayMatrix<float>(data.get() + i * width * height, width, height, width, tips.c_str());
             }
         }
 
@@ -67,6 +71,8 @@ namespace sl
         {
             Helper::AddBiasAVX2(this->data.get(), bias, this->size);
         }
+
+        void Blend();
 
     public:
         int width{ 0 };
@@ -86,6 +92,10 @@ namespace sl
         if (normalize && std::is_integral_v<T>)
         {
             Helper::Normalize(data, this->data.get(), size);
+        }
+        else
+        {
+            memcpy(this->data.get(), data, size * sizeof(float));
         }
 
         width  = x;

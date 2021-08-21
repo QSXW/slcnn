@@ -19,5 +19,8 @@ namespace sl
     private:
         Description description;
         int ksize{ 0 };
+        std::vector<float> bias;
+        int stride{ 1 };
+        int pad{ 0 };
     };
 }

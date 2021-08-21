@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 if (MSVC)
-    add_compile_options(/Zc:alignedNew)
+    add_compile_options(/Zc:alignedNew /openmp:llvm)
 endif()
 
 set(FRAMEWORK_FILES

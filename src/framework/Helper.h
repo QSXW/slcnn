@@ -24,7 +24,7 @@ namespace Helper
             }
             if constexpr (std::is_floating_point_v<T>)
             {
-                printf("%4g", m[i]);
+                printf("%g\t", m[i]);
             }
         }
         printf("\n\n");
@@ -180,6 +180,64 @@ namespace BasicLinearAlgebraSubprograms
             auto X = _mm256_loadu_ps(x + i * INC);
             X = _mm256_mul_ps(X, A);
             _mm256_storeu_ps(x + i * INC, X);
+        }
+    }
+
+    inline void Add(float *y, float *x, int size)
+    {
+        for (int i = 0; i < size; i++)
+        {
+            y[i] += x[i];
+        }
+    }
+
+    inline void AddAVX2(float *y, float *x, int size)
+    {
+        for (int i = 0; i < size; i += 8)
+        {
+            auto Y   = _mm256_loadu_ps(y + i);
+            auto X   = _mm256_loadu_ps(x + i);
+            auto RES = _mm256_add_ps(Y, X);
+
+            _mm256_storeu_ps(y + i, RES);
+        }
+    }
+
+    static inline void GEMM(int M, int N, int K, float *A, int lda,  float *B, int ldb, float *C, int ldc)
+    {
+        #pragma omp parallel for
+        for (int i = 0; i < M; i++)
+        {
+            int j = 0;
+            int k = 0;
+            for ( ; k < K; k++)
+            {
+                for (j = 0; j < N; j++)
+                {
+                    C[i * ldc + j] += A[i * lda + k] * B[k * ldb + j];
+                }
+            }
+            B += k * j;
+        }
+    }
+
+    static inline float Convolution(const float *left, const float *right, int size)
+    {
+        float sum = 0;
+        for (int i = 0; i < size; i++)
+        {
+            sum += left[i] * right[i];
+        }
+
+        return sum;
+    }
+
+    static inline void PATCH(float *dst, float *patches, int patchSize, const float *kernel, int ksize)
+    {
+        #pragma omp parallel for
+        for (int i = 0; i < patchSize; i++)
+        {
+            *dst++ = Convolution(patches + i * ksize, kernel, ksize);
         }
     }
 };

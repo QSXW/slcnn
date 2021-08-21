@@ -6,7 +6,7 @@ namespace sl
 {
     void SoftmaxLayer::Forward(Batch &input, Batch &output)
     {
-        
+        Log::Info("Forwarding: Layer => {0}", Layer::Stringify(type));
     }
 
     void SoftmaxLayer::Backward(Batch &input, Batch &output)

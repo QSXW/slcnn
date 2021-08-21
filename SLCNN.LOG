@@ -1,0 +1,54 @@
+[19:47:53] [info] SLCNN: Running => ..\..\..\src\Test.cpp  at  404  in  Launch
+[19:47:53] [info] SLCNN: Running => BasicLinearAlgebraSubprograms::Add	  at  339  in  Add
+[19:47:53] [info] SLCNN: Duration: 0.0020249
+[19:47:53] [info] SLCNN: Running => BasicLinearAlgebraSubprograms::AddAVX2	  at  343  in  Add
+[19:47:53] [info] SLCNN: Duration: 0.000612
+[19:47:53] [info] SLCNN: Running => Helper::AddBias	  at  370  in  AddBias
+[19:47:53] [info] SLCNN: Duration: 0.0019218
+[19:47:53] [info] SLCNN: Running => Helper::AddBiasAVX2	  at  374  in  AddBias
+[19:47:53] [info] SLCNN: Duration: 0.0008398
+[19:47:53] [critical] SLCNN: Test failed comparing 121.44443 with 0 (abs diff=121.44443 with epsilon=0.01)Index => 0
+[19:47:53] [info] SLCNN: Running => Tensor::IM2Col	  at  195  in  IM2Col
+[19:47:53] [info] SLCNN: Duration: 8.64e-05
+[19:47:53] [info] SLCNN: Running => BasicLinearAlgebraSubprograms::SAXPY	  at  277  in  ScalarAlphaXPlusY
+[19:47:53] [info] SLCNN: Duration: 0.0027356
+[19:47:53] [info] SLCNN: Running => BasicLinearAlgebraSubprograms::SAXPY	  at  281  in  ScalarAlphaXPlusY
+[19:47:53] [info] SLCNN: Duration: 0.0009573
+[19:47:53] [info] SLCNN: Running => BasicLinearAlgebraSubprograms::Scale	  at  308  in  Scale
+[19:47:53] [info] SLCNN: Duration: 0.0020779
+[19:47:53] [info] SLCNN: Running => BasicLinearAlgebraSubprograms::ScaleAVX2	  at  312  in  Scale
+[19:47:53] [info] SLCNN: Duration: 0.000823
+[19:47:53] [info] SLCNN: [1;33mTest: A_Fail_Test[0m	=> [ [1;31;40mFail[0m ]
+[19:47:53] [info] SLCNN: [1;33mTest: Add[0m	=> [ [0;32;32mOK[0m  ]
+[19:47:53] [info] SLCNN: [1;33mTest: AddBias[0m	=> [ [0;32;32mOK[0m  ]
+[19:47:53] [info] SLCNN: [1;33mTest: CONV[0m	=> [ [0;32;32mOK[0m  ]
+[19:47:53] [info] SLCNN: [1;33mTest: IM2Col[0m	=> [ [0;32;32mOK[0m  ]
+[19:47:53] [info] SLCNN: [1;33mTest: ReLu[0m	=> [ [0;32;32mOK[0m  ]
+[19:47:53] [info] SLCNN: [1;33mTest: SAXPY[0m	=> [ [0;32;32mOK[0m  ]
+[19:47:53] [info] SLCNN: [1;33mTest: Scale[0m	=> [ [0;32;32mOK[0m  ]
+[19:47:53] [info] SLCNN: [1;36mTest: passed 7/8[0m
+[19:47:53] [info] SLCNN: Duration: 0.1877653
+[19:47:53] [info] SLCNN: Push Layer to Net => Type::Convolutional
+[19:47:53] [info] SLCNN: Push Layer to Net => Type::BatchNormalize
+[19:47:53] [info] SLCNN: Push Layer to Net => Type::Activation
+[19:47:53] [info] SLCNN: Push Layer to Net => Type::Convolutional
+[19:47:53] [info] SLCNN: Push Layer to Net => Type::BatchNormalize
+[19:47:53] [info] SLCNN: Push Layer to Net => Type::Activation
+[19:47:53] [info] SLCNN: Push Layer to Net => Type::MaxPool
+[19:47:53] [info] SLCNN: Push Layer to Net => Type::Convolutional
+[19:47:53] [info] SLCNN: Push Layer to Net => Type::BatchNormalize
+[19:47:53] [info] SLCNN: Push Layer to Net => Type::Activation
+[19:47:53] [info] SLCNN: Push Layer to Net => Type::Convolutional
+[19:47:53] [info] SLCNN: Push Layer to Net => Type::BatchNormalize
+[19:47:53] [info] SLCNN: Push Layer to Net => Type::Activation
+[19:47:53] [info] SLCNN: Push Layer to Net => Type::MaxPool
+[19:47:53] [info] SLCNN: Push Layer to Net => Type::Flatten
+[19:47:53] [info] SLCNN: Push Layer to Net => Type::Softmax
+[19:47:53] [info] SLCNN: Net: Layer size => 15
+[19:47:53] [info] SLCNN: Set dataset for Network: width => 64, height => 64, channel => 3, batch size = 3
+[19:47:53] [info] SLCNN: Running => ..\..\..\src\framework\Net.cpp  at  100  in  Train
+[19:47:53] [info] SLCNN: Forwarding: Layer => Type::Convolutional
+[19:47:53] [info] SLCNN: Batches => 3
+[19:47:53] [info] SLCNN: Groups => 10
+[19:47:53] [info] SLCNN: Processing Batch => 0 
+[19:47:53] [info] SLCNN: Processing 0 Group(s)

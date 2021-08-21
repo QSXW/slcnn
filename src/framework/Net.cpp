@@ -74,6 +74,7 @@ namespace sl
         for (auto &layer : layers)
         {
             layer->Forward(this->input, this->output);
+            this->input = std::move(this->output);
         }
     }
 
@@ -82,6 +83,7 @@ namespace sl
         for (int i = layers.size() - 1; i >= 0; --i)
         {
             layers[i]->Backward(this->input, this->output);
+            this->input = std::move(this->output);
         }
     }
 

@@ -42,7 +42,7 @@ namespace Test
     template <class... Args>
     inline constexpr void Fail(const char *s, Args&&... args)
     {
-        fprintf(stderr, s, std::forward<Args>(args)...);
+        Log::Critical(s, std::forward<Args>(args)...);
         // __debugbreak();
     }
 
@@ -60,8 +60,8 @@ namespace Test
         {
             return true;
         }
-        Fail("Test failed comparing %.10g with %.10g (abs diff=%.10g with epsilon=%.10g)\n"
-             "Index => %d\n\n", a, b, diff, epsilon, index);
+        Fail("Test failed comparing {0} with {1} (abs diff={2} with epsilon={3})"
+             "Index => {4}", a, b, diff, epsilon, index);
         return false;
     }
 
@@ -105,9 +105,14 @@ namespace Test
     }
     
     template <size_t rows, size_t cols>
-    inline constexpr bool CompareFloatingPointSequence(float *a, float *b, float epsilon = 0.01f)
+    inline constexpr bool CompareFloatingPointSequence(float *a, float *b, float epsilon = 0.01f, size_t r = 0, size_t c = 0)
     {
-        for (size_t i = 0, length = rows * cols; i < length; i++)
+        if constexpr (rows != 0 && cols != 0)
+        {
+            r = rows;
+            c = cols;
+        }
+        for (size_t i = 0, length = r * c; i < length; i++)
         {
             if (!CompareFloatingPoint(a[i], b[i], epsilon, i))
             {
@@ -189,17 +194,80 @@ namespace Check
         };
         
         Tensor src{ a, 4, 4, 3 };
-        Tensor dst = src.IM2Col(3);
-
+        Tensor dst{};
         {
             Timer timer{ "Tensor::IM2Col\t", __LINE__, __func__ };
-            Tensor dst = src.IM2Col(3);
+            dst = src.IM2Col(3);
         }
         /*src.Display();
         dst.Display();*/
         auto ret = Test::CompareFloatingPointSequence<4, 9>(dst.data.get(), ref);
 
         return ret;
+    }
+
+    bool CONV()
+    {
+        constexpr size_t n = 2160;
+
+        float *x  = sl_aligned_malloc<float>(n * n * 3, 2);
+        Test::RandomBuffer<float, n, n * 3>(x);
+
+        Tensor src{ x, n, n, 3 };
+
+        int outHeight = (src.height + 2 * 0 - 3) / 1 + 1;
+        int outWidth  = (src.width  + 2 * 0 - 3) / 1 + 1;
+
+        Tensor y1{ outWidth, outHeight, 3 };
+        Tensor y2{ outWidth, outHeight, 3 };
+
+        Tensor kernel{ DataSet::Kernel::Edge, 3, 3, 1 };
+
+        {
+            auto kernelptr = kernel.data.get();
+            Timer timer{ "CONV: Standard Convolution", __LINE__, __func__ };
+            for (int c = 0; c < 3; c++)
+            {
+                auto srcptr = src.data.get() + (c * src.width * src.height);
+                auto dst = y1.data.get() + (c * y1.width * y1.height);
+                for (int i = 0; i < outWidth; i++)
+                {
+                    auto dstptr = dst +i * outWidth;
+                    for (int j = 0; j < outHeight; j++)
+                    {
+                        float sum = 0;
+                        for (int m = 0; m < 3; m++)
+                        {
+                            for (int n = 0; n < 3; n++)
+                            {
+                                sum += kernelptr[m * 3 + n] * srcptr[(i + m) * src.width + (j + n)];
+                            }
+                        }
+                        dstptr[j] = sum;
+                    }
+                }
+            }
+        }
+
+        {
+            auto im2col = src.IM2Col(3);
+            kernel.ExtendRow(DataSet::Kernel::Edge, 9, im2col.height);
+            auto &a = kernel;
+            auto &b = im2col;
+            auto &c = y2;
+            auto n = y2.width * y2.height;
+            Timer timer{ "CONV: GEMM", __LINE__, __func__ };
+            for (int i = 0; i < 100; i++)
+            {
+                BasicLinearAlgebraSubprograms::GEMM(y2.depth, n, kernel.width, kernel.data.get(), kernel.width, im2col.data.get(), im2col.width, y2.data.get(), n);
+            }
+        }
+
+        auto ret = Test::CompareFloatingPointSequence<0, 0>(y1.data.get(), y2.data.get(), y2.width, y2.height);
+
+        sl_aligned_free(x);
+
+        return true;
     }
 
     bool ScalarAlphaXPlusY()
@@ -261,6 +329,37 @@ namespace Check
         return ret;
     }
 
+     bool Add()
+    {
+        constexpr size_t n = 1024;
+
+        float *x  = sl_aligned_malloc<float>(n * n, 2);
+        float *y1 = sl_aligned_malloc<float>(n * n, 2);
+        float *y2 = sl_aligned_malloc<float>(n * n, 2);
+
+        Test::RandomBuffer<float, n, n>(x);
+
+        memcpy(y1, x, n * n);
+        memcpy(y2, x, n * n);
+
+        {
+            Timer timer{ "BasicLinearAlgebraSubprograms::Add\t", __LINE__, __func__ };
+            BasicLinearAlgebraSubprograms::Add(y1, x, n * n);
+        }
+        {
+            Timer timer{ "BasicLinearAlgebraSubprograms::AddAVX2\t", __LINE__, __func__ };
+            BasicLinearAlgebraSubprograms::AddAVX2(y2, x, n * n);
+        }
+
+        auto ret = Test::CompareFloatingPointSequence<n, n>(y1, y2);
+
+        sl_aligned_free(x);
+        sl_aligned_free(y1);
+        sl_aligned_free(y2);
+
+        return ret;
+    }
+
     bool AddBias()
     {
         constexpr size_t n = 1024;
@@ -298,8 +397,10 @@ namespace Test
     static std::map<std::string, std::pair<bool, std::function<bool()>>> Benchmarks = {
         { "ReLu",              { false, Check::ReLu } },
         { "IM2Col",            { false, Check::IM2Col } },
+        { "CONV",              { false, Check::CONV } },
         { "SAXPY",             { false, Check::ScalarAlphaXPlusY } },
         { "Scale",             { false, Check::Scale } },
+        { "Add",               { false, Check::Add } },
         { "AddBias",           { false, Check::AddBias } },
         { "A_Fail_Test",       { false, Check::Fail } }
     };

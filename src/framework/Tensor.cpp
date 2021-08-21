@@ -53,12 +53,35 @@ namespace sl
 
     void Tensor::Reshape(int x, int y, int z)
     {
-        assert((static_cast<size_t>(x) * static_cast<size_t>(y) * static_cast<size_t>(z)) > size &&
-                "Reshape to one dimentions but out of range");
-        size = static_cast<size_t>(x) * static_cast<size_t>(y) * static_cast<size_t>(z);
+        auto newSize = static_cast<size_t>(x) * static_cast<size_t>(y) * static_cast<size_t>(z);
+        if (newSize > size)
+        {
+            size = newSize;
+            this->data.reset(sl_aligned_malloc<float>(size, ALIGN_NUM), Deleter());
+            Helper::Clear(this->data.get(), size);
+        }
         width  = x;
         height = y;
         depth  = z;
+    }
+
+    void Tensor::ExtendRow(const float *data, int x, int y)
+    {
+        Tensor tensor{ x, y, 1 };
+        for (int i = 0; i < y; i++)
+        {
+            memcpy(tensor.data.get() + x * i, data, x * sizeof(float));
+        }
+        
+        *this = std::move(tensor);
+    }
+
+    void Tensor::PushChannel(Tensor &channel, int index)
+    {
+        /*assert(channel.size < this->size && channel.size == this->width * this->height * channel.depth &&
+            "The size of channel must less than the current one and have a identical width and height");*/
+        auto dst = this->data.get() + index * this->width * this->height;
+        memcpy(dst, channel.data.get(), channel.size);
     }
 
     Tensor Tensor::IM2Col(int ksize, int stride, int pad)
@@ -68,12 +91,14 @@ namespace sl
         int outHeight = (src.height + 2 * pad - ksize) / stride + 1;
         int outWidth  = (src.width  + 2 * pad - ksize) / stride + 1;
 
-        Tensor dst{ outWidth * outHeight, ksize * ksize, this->depth };
+        auto k2 = ksize * ksize;
+
+        Tensor dst{ outWidth * outHeight,  k2, this->depth };
 
         auto dstptr = dst.data.get();
         auto srcptr = src.data.get();
 
-        int depthCol = src.depth * ksize * ksize;
+        int depthCol = src.depth * k2;
         for (int i = 0; i < depthCol; i++)
         {
             int widthOffset  = i % ksize;
@@ -87,7 +112,7 @@ namespace sl
                     int col   = widthOffset  + x * stride;
                     int row   = heightOffset + y * stride;
                     int index = (i * outHeight + y) * outWidth + x;
-                    dstptr[index] = Helper::IM2ColGetPixel(srcptr,src.width, src.height, src.depth, col, row, srcChannel, pad);
+                    *dstptr++ = Helper::IM2ColGetPixel(srcptr,src.width, src.height, src.depth, col, row, srcChannel, pad);
                 }
             }
         }
@@ -95,9 +120,28 @@ namespace sl
         return dst;
     }
 
-    void Tensor::GEMM(Tensor &kernel)
+    void Tensor::GEMM(Tensor &a, Tensor &b)
     {
-        
+        auto offsetC = this->width * this->height;
+        auto offsetB = b.width * b.height;
+        for (int i = 0; i < this->depth; i++)
+        {
+            // BasicLinearAlgebraSubprograms::GEMM(0, 0, a.height, b.width, a.width, 1, a.data.get(), a.width, b.data.get() + offsetB, b.width, 1, this->data.get() + offsetC, b.width);
+        }
+    }
+
+    void Tensor::Blend()
+    {
+        Tensor blend{ this->width, this->height, 1 };
+
+        memcpy(blend.data.get(), this->data.get(), blend.size * sizeof(float));
+        for (int i = 1; i < this->depth; i++)
+        {
+            auto pass = this->data.get() + i * blend.size;
+            BasicLinearAlgebraSubprograms::AddAVX2(blend.data.get(), pass, blend.size);
+        }
+
+        *this = std::move(blend);
     }
 
     Tensor Tensor::TestCase {
