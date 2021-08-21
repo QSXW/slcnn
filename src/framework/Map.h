@@ -64,13 +64,38 @@ namespace Bias
         { "SL8", -0.0277f },
         { "SL9", -0.0653f }
     };
-
-    static const float KERNEL1_1[]{
-        -0.30, -0.21,  0.07, -0.19,  0.10, -0.01, -0.04, -0.02,  0.08,
-         0.14, -0.03,  0.31,  0.14,  0.11,  0.12,  0.21, -0.31, -0.23,
-        -0.03,  0.24, -0.05,  0.01, -0.02,  0.07,  0.30,  0.38,  0.19,
-    };
 }
+
+namespace Kernel
+{
+    static const float Gaussian[] = {
+        0.05855f, 0.09653f, 0.05855f, 0.09653f, 0.15915f, 0.09653f, 0.05855f, 0.09653f, 0.05855f,
+    };
+
+    static const float Emboss[] = {
+        0.1f,  0.1f, 0.1f,  0.1f, -0.8f, 0.1f, 0.1f,  0.1f, 0.1f
+    };
+
+    static const float Identity[] = {
+        0, 0, 0, 0, 1, 0, 0, 0, 0
+    };
+
+    static const float Mean[] = {
+        1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9
+    };
+
+    static const float Edge[] = {
+        1,  0, -1, 0,  0,  0, -1,  0,  1
+    };
+
+    static const std::map<std::string, const float*> KERNEL_MAP{
+        { "gaussian", Gaussian },
+        { "emboss",   Emboss   },
+        { "identity", Identity },
+        { "mean",     Mean     },
+        { "Edge",     Edge     }
+    };
+};
 
 namespace Raw
 {

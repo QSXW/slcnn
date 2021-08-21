@@ -231,6 +231,7 @@ namespace Gradient
 
     void ActivationLayer:: Forward(Batch &input, Batch &output)
     {
+        Log::Info("Forwarding: Layer => {0}: {1}", Layer::Stringify(type), key);
         output = std::move(input);
         for (auto &batch : output)
         {
@@ -243,6 +244,7 @@ namespace Gradient
 
     void ActivationLayer::Backward(Batch &input, Batch &output)
     {
+        Log::Info("Backwarding: Layer => {0}: {1}", Layer::Stringify(type), key);
         output = std::move(input);
         for (auto &batch : output)
         {

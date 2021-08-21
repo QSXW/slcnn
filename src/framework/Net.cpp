@@ -6,7 +6,10 @@
 #include "layer/BatchNormLayer.h"
 #include "layer/ActivationLayer.h"
 #include "layer/MaxPoolLayer.h"
+#include "layer/SoftmaxLayer.h"
+
 #include "Timer.h"
+#include "Log.h"
 
 namespace sl
 {
@@ -52,7 +55,13 @@ namespace sl
             {
                 layers.emplace_back(Layer::Create<MaxPoolLayer>(desc));
             }
+            if (desc.Type == Layer::Type::Softmax)
+            {
+                layers.emplace_back(Layer::Create<SoftmaxLayer>(desc));
+            }
+            Log::Info("Push Layer to Net => {0}", Layer::Stringify(desc.Type));
         }
+        Log::Info("Net: Layer size => {0}", layers.size());
     }
 
     Net::~Net()
@@ -80,7 +89,7 @@ namespace sl
     {
         assert(!batch.empty() && "dataset could not be none!");
         input = std::move(batch);
-        fprintf(stdout, "Set dataset for Network: width => %d, height => %d, channel => %d, batch size = %lld\n",
+        Log::Info("Set dataset for Network: width => {0}, height => {1}, channel => {2}, batch size = {3}",
                 input[0].width, input[0].height, input[0].depth, input.size());
     }
 

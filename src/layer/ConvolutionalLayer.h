@@ -17,6 +17,7 @@ namespace sl
         virtual void Backward(Batch &input, Batch &output) override;
 
     private:
+        Description description;
         int ksize{ 0 };
     };
 }

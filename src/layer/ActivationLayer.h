@@ -31,7 +31,7 @@ namespace sl
             {
                 activate = Activates["linear"];
             }
-            auto &key = Helper::ToLower(std::get<1>(*pair));
+            key = Helper::ToLower(std::get<1>(*pair));
             activate = Activates[key];
             gradient = Gradients[key];
         }
@@ -41,6 +41,7 @@ namespace sl
         virtual void Backward(Batch &input, Batch &output) override;
 
     private:
+        std::string key;
         Activate::Caller activate{ nullptr };
         Gradient::Caller gradient{ nullptr };
     };

@@ -27,12 +27,28 @@ namespace sl
             Softmax
         };
 
+        static inline const char *Stringify(Type type)
+        {
+#define XX(x) case x: return #x;
+            switch (type)
+            {
+                XX(Type::Convolutional);
+                XX(Type::BatchNormalize);
+                XX(Type::Activation);
+                XX(Type::MaxPool);
+                XX(Type::Flatten);
+                XX(Type::Softmax);
+            default: return "Type::None";
+            }
+        }
+
         struct Description
         {
-            Description(Layer::Type t, const std::map<std::string, float> &b = DataSet::Bias::NONE, const std::map<std::string, std::string> &p = { }) :
+            Description(Layer::Type t, const std::map<std::string, std::string> &p = { }, const std::map<std::string, float> &b = DataSet::Bias::NONE, const Batch &k = {}) :
                 Type{ t },
                 params{ p },
-                bias{ b }
+                bias{ b },
+                kernels{ k }
             {
 
             }
@@ -40,6 +56,7 @@ namespace sl
             Layer::Type Type;
             std::map<std::string, float> bias;
             const std::map<std::string, std::string> &params;
+            Batch kernels;
         };    
 
         template <class T>

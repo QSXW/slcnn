@@ -15,6 +15,8 @@ namespace sl
     public:
         Batch() = default;
 
+        Batch(const float *kernel, int ksize, int count);
+
         Batch(std::initializer_list<Tensor> &&tensors);
 
         ~Batch();
@@ -34,17 +36,17 @@ namespace sl
             return pool[index];
         }
 
-        auto empty()
+        bool empty()
         {
             return pool.empty();
         }
 
-        auto size()
+        size_t size()
         {
             return pool.size();
         }
 
-        void push_back(Tensor &&value)
+        void push_back(Tensor &value)
         {
             pool.push_back(value);
         }

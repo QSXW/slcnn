@@ -41,22 +41,6 @@ namespace sl
 
     }
 
-    template <class T>
-    Tensor::Tensor(T *data, int x, int y, int z, bool normalize)
-    {
-        size = static_cast<size_t>(x) * static_cast<size_t>(y) * static_cast<size_t>(z);
-        this->data.reset(sl_aligned_malloc<float>(size, ALIGN_NUM), Deleter());
-
-        if (normalize && std::is_integral_v<T>)
-        {
-            Helper::Normalize(data, this->data.get(), size);
-        }
-
-        width  = x;
-        height = y;
-        depth  = z;
-    }
-
     Tensor::Tensor(int x, int y, int z) :
         width{ x },
         height{ y },
@@ -103,8 +87,7 @@ namespace sl
                     int col   = widthOffset  + x * stride;
                     int row   = heightOffset + y * stride;
                     int index = (i * outHeight + y) * outWidth + x;
-                    dstptr[index] = Helper::IM2ColGetPixel(srcptr, src.width, src.height,
-                                                           src.depth, col, row, srcChannel, pad);
+                    dstptr[index] = Helper::IM2ColGetPixel(srcptr,src.width, src.height, src.depth, col, row, srcChannel, pad);
                 }
             }
         }
@@ -112,9 +95,9 @@ namespace sl
         return dst;
     }
 
-    Tensor Tensor::GEMM()
+    void Tensor::GEMM(Tensor &kernel)
     {
-        return Tensor{};
+        
     }
 
     Tensor Tensor::TestCase {

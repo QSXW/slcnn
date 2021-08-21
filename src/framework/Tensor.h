@@ -34,7 +34,7 @@ namespace sl
         ~Tensor();
 
         template <class T>
-        Tensor(T *data, int x, int y, int z = 1, bool normalize = true);
+        Tensor(const T *data, int x, int y, int z = 1, bool normalize = true);
 
         Tensor(int x, int y, int z = 1);
 
@@ -42,7 +42,7 @@ namespace sl
 
         Tensor IM2Col(int ksize, int stride = 1, int pad = 0);
 
-        Tensor GEMM();
+        void GEMM(Tensor &kernel);
 
         void Display()
         {
@@ -63,6 +63,11 @@ namespace sl
             BasicLinearAlgebraSubprograms::ScalarAlphaXPlusYAVX2(this->data.get(), x.data.get(), alpha, this->size, INCX, INCY);
         }
 
+        void AddBias(float bias)
+        {
+            Helper::AddBiasAVX2(this->data.get(), bias, this->size);
+        }
+
     public:
         int width{ 0 };
         int height{ 0 };
@@ -71,4 +76,20 @@ namespace sl
         size_t size{ 0 };
         std::shared_ptr<float> data;
     };
+
+    template <class T>
+    Tensor::Tensor(const T *data, int x, int y, int z, bool normalize)
+    {
+        size = static_cast<size_t>(x) * static_cast<size_t>(y) * static_cast<size_t>(z);
+        this->data.reset(sl_aligned_malloc<float>(size, ALIGN_NUM), Deleter());
+
+        if (normalize && std::is_integral_v<T>)
+        {
+            Helper::Normalize(data, this->data.get(), size);
+        }
+
+        width  = x;
+        height = y;
+        depth  = z;
+    }
 }

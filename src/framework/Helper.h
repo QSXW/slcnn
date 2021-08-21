@@ -35,7 +35,6 @@ namespace Helper
     {
         float c = 1.0 / (static_cast<T>(~0));
         {
-            TIME_SUPERVISED
 #if 1
             auto constant = _mm256_set1_ps(c);
 

@@ -3,6 +3,8 @@
 #include <iostream>
 #include <chrono>
 
+#include "Log.h"
+
 namespace sl
 {
 #if defined( _DEBUG ) || defined( DEBUG )
@@ -25,20 +27,20 @@ namespace sl
 		Timer()
 		{
 			start = Clock::now();
-			fprintf(stdout, "Timer Start\n");
+			Log::Info("Timer Start");
 		}
 
 		Timer(const char *file, const int line, const char *func)
 		{
 			start = Clock::now();
-			fprintf(stdout, "\nRunning => %s  at  %d  in  %s\n", file, line, func);
+			Log::Info("Running => {0}  at  {1}  in  {2}", file, line, func);
 		}
 
 		virtual ~Timer()
 		{
 			end = Clock::now();
 			auto duration = std::chrono::duration<double, DefaultResolution>(end - start);
-			fprintf(stdout, "Duration: %.10gs\n\n", duration.count());
+			Log::Info("Duration: {0}", duration.count());
 		}
 
 	private:

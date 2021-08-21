@@ -195,8 +195,8 @@ namespace Check
             Timer timer{ "Tensor::IM2Col\t", __LINE__, __func__ };
             Tensor dst = src.IM2Col(3);
         }
-        src.Display();
-        dst.Display();
+        /*src.Display();
+        dst.Display();*/
         auto ret = Test::CompareFloatingPointSequence<4, 9>(dst.data.get(), ref);
 
         return ret;
@@ -213,11 +213,11 @@ namespace Check
         Test::RandomBuffer<float, n, n>(x);
 
         {
-            Timer timer{ "BasicLinearAlgebraSubprograms::ScalarAlphaXPlusY\t", __LINE__, __func__ };
+            Timer timer{ "BasicLinearAlgebraSubprograms::SAXPY\t", __LINE__, __func__ };
             BasicLinearAlgebraSubprograms::ScalarAlphaXPlusY(y1, x, 0.1114f, n * n);
         }
         {
-            Timer timer{ "BasicLinearAlgebraSubprograms::ScalarAlphaXPlusYAVX2\t", __LINE__, __func__ };
+            Timer timer{ "BasicLinearAlgebraSubprograms::SAXPY\t", __LINE__, __func__ };
             BasicLinearAlgebraSubprograms::ScalarAlphaXPlusYAVX2(y2, x, 0.1114f, n * n);
         }
 
@@ -298,10 +298,10 @@ namespace Test
     static std::map<std::string, std::pair<bool, std::function<bool()>>> Benchmarks = {
         { "ReLu",              { false, Check::ReLu } },
         { "IM2Col",            { false, Check::IM2Col } },
-        { "ScalarAlphaXPlusY", { false, Check::ScalarAlphaXPlusY } },
+        { "SAXPY",             { false, Check::ScalarAlphaXPlusY } },
         { "Scale",             { false, Check::Scale } },
         { "AddBias",           { false, Check::AddBias } },
-        { "Fail",              { false, Check::Fail } }
+        { "A_Fail_Test",       { false, Check::Fail } }
     };
 
     int Launch()
@@ -330,16 +330,16 @@ namespace Test
 
             if (passed)
             {
-                fprintf(stdout, "\033[1;33mTest: %s\033[0m\t=> [  \033[0;32;32mOK\033[0m  ]\n", name.c_str());
+                Log::Info("\033[1;33mTest: {0}\033[0m\t=> {1}", name.c_str(), "[ \033[0;32;32mOK\033[0m  ]");
             }
             else
             {
                 
-                fprintf(stdout, "\033[1;33mTest: %s\033[0m\t=> [ \033[1;31;40mFail\033[0m ]\n", name.c_str());
+                Log::Info("\033[1;33mTest: {0}\033[0m\t=> {1}", name.c_str(), "[ \033[1;31;40mFail\033[0m ]");
             }
         }
 
-        fprintf(stdout, "...\n\033[1;36mTest: passed %d/%d\033[0m\n", (sum - fail), sum);
+        Log::Info("\033[1;36mTest: passed {0}/{1}\033[0m", (sum - fail), sum);
         return 0;
     }
 }
