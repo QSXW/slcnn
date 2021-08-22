@@ -39,7 +39,5 @@ namespace sl
 
         Batch input;
         Batch output;
-
-        Layer::Type lastType{ Layer::Type::None };
     };
 }

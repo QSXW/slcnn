@@ -47,7 +47,6 @@ namespace sl
             {
                 layers.emplace_back(Layer::Create<SoftmaxLayer>(desc));
             }
-            lastType = desc.Type;
             Log::Info("Push Layer to Net => {0}", Layer::Stringify(desc.Type));
         }
         Log::Info("Net: Layer size => {0}", layers.size());
@@ -63,7 +62,6 @@ namespace sl
         for (auto &layer : layers)
         {
             layer->Forward(input, output);
-            output[0].Display(0);
             input = std::move(output);
             output = Batch{};
         }

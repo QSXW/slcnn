@@ -1,54 +1,516 @@
-[19:47:53] [info] SLCNN: Running => ..\..\..\src\Test.cpp  at  404  in  Launch
-[19:47:53] [info] SLCNN: Running => BasicLinearAlgebraSubprograms::Add	  at  339  in  Add
-[19:47:53] [info] SLCNN: Duration: 0.0020249
-[19:47:53] [info] SLCNN: Running => BasicLinearAlgebraSubprograms::AddAVX2	  at  343  in  Add
-[19:47:53] [info] SLCNN: Duration: 0.000612
-[19:47:53] [info] SLCNN: Running => Helper::AddBias	  at  370  in  AddBias
-[19:47:53] [info] SLCNN: Duration: 0.0019218
-[19:47:53] [info] SLCNN: Running => Helper::AddBiasAVX2	  at  374  in  AddBias
-[19:47:53] [info] SLCNN: Duration: 0.0008398
-[19:47:53] [critical] SLCNN: Test failed comparing 121.44443 with 0 (abs diff=121.44443 with epsilon=0.01)Index => 0
-[19:47:53] [info] SLCNN: Running => Tensor::IM2Col	  at  195  in  IM2Col
-[19:47:53] [info] SLCNN: Duration: 8.64e-05
-[19:47:53] [info] SLCNN: Running => BasicLinearAlgebraSubprograms::SAXPY	  at  277  in  ScalarAlphaXPlusY
-[19:47:53] [info] SLCNN: Duration: 0.0027356
-[19:47:53] [info] SLCNN: Running => BasicLinearAlgebraSubprograms::SAXPY	  at  281  in  ScalarAlphaXPlusY
-[19:47:53] [info] SLCNN: Duration: 0.0009573
-[19:47:53] [info] SLCNN: Running => BasicLinearAlgebraSubprograms::Scale	  at  308  in  Scale
-[19:47:53] [info] SLCNN: Duration: 0.0020779
-[19:47:53] [info] SLCNN: Running => BasicLinearAlgebraSubprograms::ScaleAVX2	  at  312  in  Scale
-[19:47:53] [info] SLCNN: Duration: 0.000823
-[19:47:53] [info] SLCNN: [1;33mTest: A_Fail_Test[0m	=> [ [1;31;40mFail[0m ]
-[19:47:53] [info] SLCNN: [1;33mTest: Add[0m	=> [ [0;32;32mOK[0m  ]
-[19:47:53] [info] SLCNN: [1;33mTest: AddBias[0m	=> [ [0;32;32mOK[0m  ]
-[19:47:53] [info] SLCNN: [1;33mTest: CONV[0m	=> [ [0;32;32mOK[0m  ]
-[19:47:53] [info] SLCNN: [1;33mTest: IM2Col[0m	=> [ [0;32;32mOK[0m  ]
-[19:47:53] [info] SLCNN: [1;33mTest: ReLu[0m	=> [ [0;32;32mOK[0m  ]
-[19:47:53] [info] SLCNN: [1;33mTest: SAXPY[0m	=> [ [0;32;32mOK[0m  ]
-[19:47:53] [info] SLCNN: [1;33mTest: Scale[0m	=> [ [0;32;32mOK[0m  ]
-[19:47:53] [info] SLCNN: [1;36mTest: passed 7/8[0m
-[19:47:53] [info] SLCNN: Duration: 0.1877653
-[19:47:53] [info] SLCNN: Push Layer to Net => Type::Convolutional
-[19:47:53] [info] SLCNN: Push Layer to Net => Type::BatchNormalize
-[19:47:53] [info] SLCNN: Push Layer to Net => Type::Activation
-[19:47:53] [info] SLCNN: Push Layer to Net => Type::Convolutional
-[19:47:53] [info] SLCNN: Push Layer to Net => Type::BatchNormalize
-[19:47:53] [info] SLCNN: Push Layer to Net => Type::Activation
-[19:47:53] [info] SLCNN: Push Layer to Net => Type::MaxPool
-[19:47:53] [info] SLCNN: Push Layer to Net => Type::Convolutional
-[19:47:53] [info] SLCNN: Push Layer to Net => Type::BatchNormalize
-[19:47:53] [info] SLCNN: Push Layer to Net => Type::Activation
-[19:47:53] [info] SLCNN: Push Layer to Net => Type::Convolutional
-[19:47:53] [info] SLCNN: Push Layer to Net => Type::BatchNormalize
-[19:47:53] [info] SLCNN: Push Layer to Net => Type::Activation
-[19:47:53] [info] SLCNN: Push Layer to Net => Type::MaxPool
-[19:47:53] [info] SLCNN: Push Layer to Net => Type::Flatten
-[19:47:53] [info] SLCNN: Push Layer to Net => Type::Softmax
-[19:47:53] [info] SLCNN: Net: Layer size => 15
-[19:47:53] [info] SLCNN: Set dataset for Network: width => 64, height => 64, channel => 3, batch size = 3
-[19:47:53] [info] SLCNN: Running => ..\..\..\src\framework\Net.cpp  at  100  in  Train
-[19:47:53] [info] SLCNN: Forwarding: Layer => Type::Convolutional
-[19:47:53] [info] SLCNN: Batches => 3
-[19:47:53] [info] SLCNN: Groups => 10
-[19:47:53] [info] SLCNN: Processing Batch => 0 
-[19:47:53] [info] SLCNN: Processing 0 Group(s)
+[23:48:44] [info] SLCNN: Running => ..\..\..\src\Test.cpp  at  501  in  Launch
+[23:48:44] [info] SLCNN: Running => BasicLinearAlgebraSubprograms::Add	  at  344  in  Add
+[23:48:44] [info] SLCNN: Duration: 0.0017785
+[23:48:44] [info] SLCNN: Running => BasicLinearAlgebraSubprograms::AddAVX2	  at  348  in  Add
+[23:48:44] [info] SLCNN: Duration: 0.0006272
+[23:48:44] [info] SLCNN: Running => Helper::AddBias	  at  375  in  AddBias
+[23:48:44] [info] SLCNN: Duration: 0.0019041
+[23:48:44] [info] SLCNN: Running => Helper::AddBiasAVX2	  at  379  in  AddBias
+[23:48:44] [info] SLCNN: Duration: 0.0009028
+[23:48:44] [info] SLCNN: Running => CONV: Standard Convolution  at  228  in  CONV
+[23:48:44] [info] SLCNN: Duration: 0.2439553
+[23:48:45] [info] SLCNN: Running => CONV: GEMM  at  259  in  CONV
+[23:48:45] [info] SLCNN: Duration: 0.1981975
+[23:48:45] [info] SLCNN: Running => Tensor::IM2Col	  at  199  in  IM2Col
+[23:48:45] [info] SLCNN: Duration: 0.0006037
+[23:48:45] [info] SLCNN: Running => Tensor::MaxPool	  at  428  in  MaxPool
+[23:48:45] [info] SLCNN: Duration: 0.0001182
+[23:48:45] [info] SLCNN: Running => BasicLinearAlgebraSubprograms::Mean	  at  458  in  Mean_Variance_Normalized
+[23:48:45] [info] SLCNN: Duration: 0.0001837
+[23:48:45] [info] SLCNN: Running => BasicLinearAlgebraSubprograms::Variance	  at  464  in  Mean_Variance_Normalized
+[23:48:45] [info] SLCNN: Duration: 9.68e-05
+[23:48:45] [info] SLCNN: Running => BasicLinearAlgebraSubprograms::Normalize	  at  471  in  Mean_Variance_Normalized
+[23:48:45] [info] SLCNN: Duration: 7.9e-05
+[23:48:45] [info] SLCNN: Running => BasicLinearAlgebraSubprograms::Mean	  at  458  in  Mean_Variance_Normalized
+[23:48:45] [info] SLCNN: Duration: 9.06e-05
+[23:48:45] [info] SLCNN: Running => BasicLinearAlgebraSubprograms::Variance	  at  464  in  Mean_Variance_Normalized
+[23:48:45] [info] SLCNN: Duration: 9.26e-05
+[23:48:45] [info] SLCNN: Running => BasicLinearAlgebraSubprograms::Normalize	  at  471  in  Mean_Variance_Normalized
+[23:48:45] [info] SLCNN: Duration: 9.41e-05
+[23:48:45] [info] SLCNN: Running => BasicLinearAlgebraSubprograms::SAXPY	  at  282  in  ScalarAlphaXPlusY
+[23:48:45] [info] SLCNN: Duration: 0.0025722
+[23:48:45] [info] SLCNN: Running => BasicLinearAlgebraSubprograms::SAXPY	  at  286  in  ScalarAlphaXPlusY
+[23:48:45] [info] SLCNN: Duration: 0.0009748
+[23:48:45] [info] SLCNN: Running => BasicLinearAlgebraSubprograms::Scale	  at  313  in  Scale
+[23:48:45] [info] SLCNN: Duration: 0.0018846
+[23:48:45] [info] SLCNN: Running => BasicLinearAlgebraSubprograms::ScaleAVX2	  at  317  in  Scale
+[23:48:45] [info] SLCNN: Duration: 0.0006308
+[23:48:45] [info] SLCNN: Running => BasicLinearAlgebraSubprograms::Mean	  at  458  in  Mean_Variance_Normalized
+[23:48:45] [info] SLCNN: Duration: 0.0001881
+[23:48:45] [info] SLCNN: Running => BasicLinearAlgebraSubprograms::Variance	  at  464  in  Mean_Variance_Normalized
+[23:48:45] [info] SLCNN: Duration: 0.0001063
+[23:48:45] [info] SLCNN: Running => BasicLinearAlgebraSubprograms::Normalize	  at  471  in  Mean_Variance_Normalized
+[23:48:45] [info] SLCNN: Duration: 9.78e-05
+[23:48:45] [info] SLCNN: [1;33mTest: A_Fail_Test[0m	=> [ [1;31;40mFail[0m ]
+[23:48:45] [info] SLCNN: [1;33mTest: Add[0m	=> [ [0;32;32mOK[0m  ]
+[23:48:45] [info] SLCNN: [1;33mTest: AddBias[0m	=> [ [0;32;32mOK[0m  ]
+[23:48:45] [info] SLCNN: [1;33mTest: CONV[0m	=> [ [0;32;32mOK[0m  ]
+[23:48:45] [info] SLCNN: [1;33mTest: IM2Col[0m	=> [ [0;32;32mOK[0m  ]
+[23:48:46] [info] SLCNN: [1;33mTest: MaxPool[0m	=> [ [0;32;32mOK[0m  ]
+[23:48:46] [info] SLCNN: [1;33mTest: Mean[0m	=> [ [0;32;32mOK[0m  ]
+[23:48:46] [info] SLCNN: [1;33mTest: Norm[0m	=> [ [0;32;32mOK[0m  ]
+[23:48:46] [info] SLCNN: [1;33mTest: ReLu[0m	=> [ [0;32;32mOK[0m  ]
+[23:48:46] [info] SLCNN: [1;33mTest: SAXPY[0m	=> [ [0;32;32mOK[0m  ]
+[23:48:46] [info] SLCNN: [1;33mTest: Scale[0m	=> [ [0;32;32mOK[0m  ]
+[23:48:46] [info] SLCNN: [1;33mTest: Variance[0m	=> [ [0;32;32mOK[0m  ]
+[23:48:46] [info] SLCNN: [1;36mTest: passed 11/12[0m
+[23:48:46] [info] SLCNN: Duration: 1.8498546
+[23:48:46] [info] SLCNN: Push Layer to Net => Type::Convolutional
+[23:48:46] [info] SLCNN: Push Layer to Net => Type::BatchNormalize
+[23:48:46] [info] SLCNN: Push Layer to Net => Type::Activation
+[23:48:46] [info] SLCNN: Push Layer to Net => Type::Convolutional
+[23:48:46] [info] SLCNN: Push Layer to Net => Type::BatchNormalize
+[23:48:46] [info] SLCNN: Push Layer to Net => Type::Activation
+[23:48:46] [info] SLCNN: Push Layer to Net => Type::MaxPool
+[23:48:46] [info] SLCNN: Push Layer to Net => Type::Convolutional
+[23:48:46] [info] SLCNN: Push Layer to Net => Type::BatchNormalize
+[23:48:46] [info] SLCNN: Push Layer to Net => Type::Activation
+[23:48:46] [info] SLCNN: Push Layer to Net => Type::Convolutional
+[23:48:46] [info] SLCNN: Push Layer to Net => Type::BatchNormalize
+[23:48:46] [info] SLCNN: Push Layer to Net => Type::Activation
+[23:48:46] [info] SLCNN: Push Layer to Net => Type::MaxPool
+[23:48:46] [info] SLCNN: Push Layer to Net => Type::Flatten
+[23:48:46] [info] SLCNN: Push Layer to Net => Type::Softmax
+[23:48:46] [info] SLCNN: Net: Layer size => 15
+[23:48:46] [info] SLCNN: Set dataset for Network: width => 16, height => 16, channel => 3, batch size = 3
+[23:48:46] [info] SLCNN: Running => ..\..\..\src\framework\Net.cpp  at  90  in  Train
+[23:48:46] [info] SLCNN: Forwarding: Layer => Type::Convolutional
+[23:48:46] [info] SLCNN: Batches => 3
+[23:48:46] [info] SLCNN: Groups => 10
+[23:48:46] [info] SLCNN: Processing Batch => 0 
+[23:48:46] [info] SLCNN: Processing 0 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 16	height => 16	depth => 3
+[23:48:46] [info] SLCNN:     Conv Image: width => 14	height => 14	depth => 1
+[23:48:46] [info] SLCNN: Processing 1 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 16	height => 16	depth => 3
+[23:48:46] [info] SLCNN:     Conv Image: width => 14	height => 14	depth => 1
+[23:48:46] [info] SLCNN: Processing 2 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 16	height => 16	depth => 3
+[23:48:46] [info] SLCNN:     Conv Image: width => 14	height => 14	depth => 1
+[23:48:46] [info] SLCNN: Processing 3 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 16	height => 16	depth => 3
+[23:48:46] [info] SLCNN:     Conv Image: width => 14	height => 14	depth => 1
+[23:48:46] [info] SLCNN: Processing 4 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 16	height => 16	depth => 3
+[23:48:46] [info] SLCNN:     Conv Image: width => 14	height => 14	depth => 1
+[23:48:46] [info] SLCNN: Processing 5 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 16	height => 16	depth => 3
+[23:48:46] [info] SLCNN:     Conv Image: width => 14	height => 14	depth => 1
+[23:48:46] [info] SLCNN: Processing 6 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 16	height => 16	depth => 3
+[23:48:46] [info] SLCNN:     Conv Image: width => 14	height => 14	depth => 1
+[23:48:46] [info] SLCNN: Processing 7 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 16	height => 16	depth => 3
+[23:48:46] [info] SLCNN:     Conv Image: width => 14	height => 14	depth => 1
+[23:48:46] [info] SLCNN: Processing 8 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 16	height => 16	depth => 3
+[23:48:46] [info] SLCNN:     Conv Image: width => 14	height => 14	depth => 1
+[23:48:46] [info] SLCNN: Processing 9 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 16	height => 16	depth => 3
+[23:48:46] [info] SLCNN:     Conv Image: width => 14	height => 14	depth => 1
+[23:48:46] [info] SLCNN:  Grouped Image: width => 14	height => 14	depth => 10
+[23:48:46] [info] SLCNN: Processing Batch => 1 
+[23:48:46] [info] SLCNN: Processing 0 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 32	height => 32	depth => 3
+[23:48:46] [info] SLCNN:     Conv Image: width => 14	height => 14	depth => 1
+[23:48:46] [info] SLCNN: Processing 1 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 32	height => 32	depth => 3
+[23:48:46] [info] SLCNN:     Conv Image: width => 14	height => 14	depth => 1
+[23:48:46] [info] SLCNN: Processing 2 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 32	height => 32	depth => 3
+[23:48:46] [info] SLCNN:     Conv Image: width => 14	height => 14	depth => 1
+[23:48:46] [info] SLCNN: Processing 3 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 32	height => 32	depth => 3
+[23:48:46] [info] SLCNN:     Conv Image: width => 14	height => 14	depth => 1
+[23:48:46] [info] SLCNN: Processing 4 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 32	height => 32	depth => 3
+[23:48:46] [info] SLCNN:     Conv Image: width => 14	height => 14	depth => 1
+[23:48:46] [info] SLCNN: Processing 5 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 32	height => 32	depth => 3
+[23:48:46] [info] SLCNN:     Conv Image: width => 14	height => 14	depth => 1
+[23:48:46] [info] SLCNN: Processing 6 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 32	height => 32	depth => 3
+[23:48:46] [info] SLCNN:     Conv Image: width => 14	height => 14	depth => 1
+[23:48:46] [info] SLCNN: Processing 7 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 32	height => 32	depth => 3
+[23:48:46] [info] SLCNN:     Conv Image: width => 14	height => 14	depth => 1
+[23:48:46] [info] SLCNN: Processing 8 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 32	height => 32	depth => 3
+[23:48:46] [info] SLCNN:     Conv Image: width => 14	height => 14	depth => 1
+[23:48:46] [info] SLCNN: Processing 9 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 32	height => 32	depth => 3
+[23:48:46] [info] SLCNN:     Conv Image: width => 14	height => 14	depth => 1
+[23:48:46] [info] SLCNN:  Grouped Image: width => 14	height => 14	depth => 10
+[23:48:46] [info] SLCNN: Processing Batch => 2 
+[23:48:46] [info] SLCNN: Processing 0 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 64	height => 64	depth => 3
+[23:48:46] [info] SLCNN:     Conv Image: width => 14	height => 14	depth => 1
+[23:48:46] [info] SLCNN: Processing 1 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 64	height => 64	depth => 3
+[23:48:46] [info] SLCNN:     Conv Image: width => 14	height => 14	depth => 1
+[23:48:46] [info] SLCNN: Processing 2 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 64	height => 64	depth => 3
+[23:48:46] [info] SLCNN:     Conv Image: width => 14	height => 14	depth => 1
+[23:48:46] [info] SLCNN: Processing 3 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 64	height => 64	depth => 3
+[23:48:46] [info] SLCNN:     Conv Image: width => 14	height => 14	depth => 1
+[23:48:46] [info] SLCNN: Processing 4 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 64	height => 64	depth => 3
+[23:48:46] [info] SLCNN:     Conv Image: width => 14	height => 14	depth => 1
+[23:48:46] [info] SLCNN: Processing 5 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 64	height => 64	depth => 3
+[23:48:46] [info] SLCNN:     Conv Image: width => 14	height => 14	depth => 1
+[23:48:46] [info] SLCNN: Processing 6 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 64	height => 64	depth => 3
+[23:48:46] [info] SLCNN:     Conv Image: width => 14	height => 14	depth => 1
+[23:48:46] [info] SLCNN: Processing 7 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 64	height => 64	depth => 3
+[23:48:46] [info] SLCNN:     Conv Image: width => 14	height => 14	depth => 1
+[23:48:46] [info] SLCNN: Processing 8 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 64	height => 64	depth => 3
+[23:48:46] [info] SLCNN:     Conv Image: width => 14	height => 14	depth => 1
+[23:48:46] [info] SLCNN: Processing 9 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 64	height => 64	depth => 3
+[23:48:46] [info] SLCNN:     Conv Image: width => 14	height => 14	depth => 1
+[23:48:46] [info] SLCNN:  Grouped Image: width => 14	height => 14	depth => 10
+[23:48:46] [info] SLCNN: Forwarding: Layer => Type::BatchNormalize
+[23:48:46] [info] SLCNN: Forwarding: Layer => Type::Activation: relu
+[23:48:46] [info] SLCNN: Forwarding: Layer => Type::Convolutional
+[23:48:46] [info] SLCNN: Batches => 3
+[23:48:46] [info] SLCNN: Groups => 10
+[23:48:46] [info] SLCNN: Processing Batch => 0 
+[23:48:46] [info] SLCNN: Processing 0 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 14	height => 14	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 12	height => 12	depth => 1
+[23:48:46] [info] SLCNN: Processing 1 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 14	height => 14	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 12	height => 12	depth => 1
+[23:48:46] [info] SLCNN: Processing 2 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 14	height => 14	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 12	height => 12	depth => 1
+[23:48:46] [info] SLCNN: Processing 3 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 14	height => 14	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 12	height => 12	depth => 1
+[23:48:46] [info] SLCNN: Processing 4 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 14	height => 14	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 12	height => 12	depth => 1
+[23:48:46] [info] SLCNN: Processing 5 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 14	height => 14	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 12	height => 12	depth => 1
+[23:48:46] [info] SLCNN: Processing 6 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 14	height => 14	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 12	height => 12	depth => 1
+[23:48:46] [info] SLCNN: Processing 7 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 14	height => 14	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 12	height => 12	depth => 1
+[23:48:46] [info] SLCNN: Processing 8 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 14	height => 14	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 12	height => 12	depth => 1
+[23:48:46] [info] SLCNN: Processing 9 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 14	height => 14	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 12	height => 12	depth => 1
+[23:48:46] [info] SLCNN:  Grouped Image: width => 12	height => 12	depth => 10
+[23:48:46] [info] SLCNN: Processing Batch => 1 
+[23:48:46] [info] SLCNN: Processing 0 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 14	height => 14	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 12	height => 12	depth => 1
+[23:48:46] [info] SLCNN: Processing 1 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 14	height => 14	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 12	height => 12	depth => 1
+[23:48:46] [info] SLCNN: Processing 2 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 14	height => 14	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 12	height => 12	depth => 1
+[23:48:46] [info] SLCNN: Processing 3 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 14	height => 14	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 12	height => 12	depth => 1
+[23:48:46] [info] SLCNN: Processing 4 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 14	height => 14	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 12	height => 12	depth => 1
+[23:48:46] [info] SLCNN: Processing 5 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 14	height => 14	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 12	height => 12	depth => 1
+[23:48:46] [info] SLCNN: Processing 6 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 14	height => 14	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 12	height => 12	depth => 1
+[23:48:46] [info] SLCNN: Processing 7 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 14	height => 14	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 12	height => 12	depth => 1
+[23:48:46] [info] SLCNN: Processing 8 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 14	height => 14	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 12	height => 12	depth => 1
+[23:48:46] [info] SLCNN: Processing 9 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 14	height => 14	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 12	height => 12	depth => 1
+[23:48:46] [info] SLCNN:  Grouped Image: width => 12	height => 12	depth => 10
+[23:48:46] [info] SLCNN: Processing Batch => 2 
+[23:48:46] [info] SLCNN: Processing 0 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 14	height => 14	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 12	height => 12	depth => 1
+[23:48:46] [info] SLCNN: Processing 1 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 14	height => 14	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 12	height => 12	depth => 1
+[23:48:46] [info] SLCNN: Processing 2 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 14	height => 14	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 12	height => 12	depth => 1
+[23:48:46] [info] SLCNN: Processing 3 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 14	height => 14	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 12	height => 12	depth => 1
+[23:48:46] [info] SLCNN: Processing 4 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 14	height => 14	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 12	height => 12	depth => 1
+[23:48:46] [info] SLCNN: Processing 5 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 14	height => 14	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 12	height => 12	depth => 1
+[23:48:46] [info] SLCNN: Processing 6 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 14	height => 14	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 12	height => 12	depth => 1
+[23:48:46] [info] SLCNN: Processing 7 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 14	height => 14	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 12	height => 12	depth => 1
+[23:48:46] [info] SLCNN: Processing 8 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 14	height => 14	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 12	height => 12	depth => 1
+[23:48:46] [info] SLCNN: Processing 9 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 14	height => 14	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 12	height => 12	depth => 1
+[23:48:46] [info] SLCNN:  Grouped Image: width => 12	height => 12	depth => 10
+[23:48:46] [info] SLCNN: Forwarding: Layer => Type::BatchNormalize
+[23:48:46] [info] SLCNN: Forwarding: Layer => Type::Activation: relu
+[23:48:46] [info] SLCNN: Forwarding: Layer => Type::MaxPool
+[23:48:46] [info] SLCNN: Processing Batch => 0 
+[23:48:46] [info] SLCNN: Original Image: width => 12	height => 12	depth => 10
+[23:48:46] [info] SLCNN:  MaxPool Image: width => 6	height => 6	depth => 10
+[23:48:46] [info] SLCNN: Processing Batch => 1 
+[23:48:46] [info] SLCNN: Original Image: width => 12	height => 12	depth => 10
+[23:48:46] [info] SLCNN:  MaxPool Image: width => 6	height => 6	depth => 10
+[23:48:46] [info] SLCNN: Processing Batch => 2 
+[23:48:46] [info] SLCNN: Original Image: width => 12	height => 12	depth => 10
+[23:48:46] [info] SLCNN:  MaxPool Image: width => 6	height => 6	depth => 10
+[23:48:46] [info] SLCNN: Forwarding: Layer => Type::Convolutional
+[23:48:46] [info] SLCNN: Batches => 3
+[23:48:46] [info] SLCNN: Groups => 10
+[23:48:46] [info] SLCNN: Processing Batch => 0 
+[23:48:46] [info] SLCNN: Processing 0 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 6	height => 6	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 4	height => 4	depth => 1
+[23:48:46] [info] SLCNN: Processing 1 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 6	height => 6	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 4	height => 4	depth => 1
+[23:48:46] [info] SLCNN: Processing 2 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 6	height => 6	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 4	height => 4	depth => 1
+[23:48:46] [info] SLCNN: Processing 3 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 6	height => 6	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 4	height => 4	depth => 1
+[23:48:46] [info] SLCNN: Processing 4 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 6	height => 6	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 4	height => 4	depth => 1
+[23:48:46] [info] SLCNN: Processing 5 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 6	height => 6	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 4	height => 4	depth => 1
+[23:48:46] [info] SLCNN: Processing 6 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 6	height => 6	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 4	height => 4	depth => 1
+[23:48:46] [info] SLCNN: Processing 7 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 6	height => 6	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 4	height => 4	depth => 1
+[23:48:46] [info] SLCNN: Processing 8 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 6	height => 6	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 4	height => 4	depth => 1
+[23:48:46] [info] SLCNN: Processing 9 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 6	height => 6	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 4	height => 4	depth => 1
+[23:48:46] [info] SLCNN:  Grouped Image: width => 4	height => 4	depth => 10
+[23:48:46] [info] SLCNN: Processing Batch => 1 
+[23:48:46] [info] SLCNN: Processing 0 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 6	height => 6	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 4	height => 4	depth => 1
+[23:48:46] [info] SLCNN: Processing 1 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 6	height => 6	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 4	height => 4	depth => 1
+[23:48:46] [info] SLCNN: Processing 2 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 6	height => 6	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 4	height => 4	depth => 1
+[23:48:46] [info] SLCNN: Processing 3 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 6	height => 6	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 4	height => 4	depth => 1
+[23:48:46] [info] SLCNN: Processing 4 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 6	height => 6	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 4	height => 4	depth => 1
+[23:48:46] [info] SLCNN: Processing 5 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 6	height => 6	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 4	height => 4	depth => 1
+[23:48:46] [info] SLCNN: Processing 6 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 6	height => 6	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 4	height => 4	depth => 1
+[23:48:46] [info] SLCNN: Processing 7 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 6	height => 6	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 4	height => 4	depth => 1
+[23:48:46] [info] SLCNN: Processing 8 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 6	height => 6	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 4	height => 4	depth => 1
+[23:48:46] [info] SLCNN: Processing 9 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 6	height => 6	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 4	height => 4	depth => 1
+[23:48:46] [info] SLCNN:  Grouped Image: width => 4	height => 4	depth => 10
+[23:48:46] [info] SLCNN: Processing Batch => 2 
+[23:48:46] [info] SLCNN: Processing 0 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 6	height => 6	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 4	height => 4	depth => 1
+[23:48:46] [info] SLCNN: Processing 1 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 6	height => 6	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 4	height => 4	depth => 1
+[23:48:46] [info] SLCNN: Processing 2 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 6	height => 6	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 4	height => 4	depth => 1
+[23:48:46] [info] SLCNN: Processing 3 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 6	height => 6	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 4	height => 4	depth => 1
+[23:48:46] [info] SLCNN: Processing 4 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 6	height => 6	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 4	height => 4	depth => 1
+[23:48:46] [info] SLCNN: Processing 5 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 6	height => 6	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 4	height => 4	depth => 1
+[23:48:46] [info] SLCNN: Processing 6 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 6	height => 6	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 4	height => 4	depth => 1
+[23:48:46] [info] SLCNN: Processing 7 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 6	height => 6	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 4	height => 4	depth => 1
+[23:48:46] [info] SLCNN: Processing 8 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 6	height => 6	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 4	height => 4	depth => 1
+[23:48:46] [info] SLCNN: Processing 9 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 6	height => 6	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 4	height => 4	depth => 1
+[23:48:46] [info] SLCNN:  Grouped Image: width => 4	height => 4	depth => 10
+[23:48:46] [info] SLCNN: Forwarding: Layer => Type::BatchNormalize
+[23:48:46] [info] SLCNN: Forwarding: Layer => Type::Activation: relu
+[23:48:46] [info] SLCNN: Forwarding: Layer => Type::Convolutional
+[23:48:46] [info] SLCNN: Batches => 3
+[23:48:46] [info] SLCNN: Groups => 10
+[23:48:46] [info] SLCNN: Processing Batch => 0 
+[23:48:46] [info] SLCNN: Processing 0 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 4	height => 4	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 2	height => 2	depth => 1
+[23:48:46] [info] SLCNN: Processing 1 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 4	height => 4	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 2	height => 2	depth => 1
+[23:48:46] [info] SLCNN: Processing 2 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 4	height => 4	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 2	height => 2	depth => 1
+[23:48:46] [info] SLCNN: Processing 3 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 4	height => 4	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 2	height => 2	depth => 1
+[23:48:46] [info] SLCNN: Processing 4 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 4	height => 4	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 2	height => 2	depth => 1
+[23:48:46] [info] SLCNN: Processing 5 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 4	height => 4	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 2	height => 2	depth => 1
+[23:48:46] [info] SLCNN: Processing 6 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 4	height => 4	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 2	height => 2	depth => 1
+[23:48:46] [info] SLCNN: Processing 7 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 4	height => 4	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 2	height => 2	depth => 1
+[23:48:46] [info] SLCNN: Processing 8 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 4	height => 4	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 2	height => 2	depth => 1
+[23:48:46] [info] SLCNN: Processing 9 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 4	height => 4	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 2	height => 2	depth => 1
+[23:48:46] [info] SLCNN:  Grouped Image: width => 2	height => 2	depth => 10
+[23:48:46] [info] SLCNN: Processing Batch => 1 
+[23:48:46] [info] SLCNN: Processing 0 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 4	height => 4	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 2	height => 2	depth => 1
+[23:48:46] [info] SLCNN: Processing 1 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 4	height => 4	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 2	height => 2	depth => 1
+[23:48:46] [info] SLCNN: Processing 2 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 4	height => 4	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 2	height => 2	depth => 1
+[23:48:46] [info] SLCNN: Processing 3 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 4	height => 4	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 2	height => 2	depth => 1
+[23:48:46] [info] SLCNN: Processing 4 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 4	height => 4	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 2	height => 2	depth => 1
+[23:48:46] [info] SLCNN: Processing 5 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 4	height => 4	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 2	height => 2	depth => 1
+[23:48:46] [info] SLCNN: Processing 6 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 4	height => 4	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 2	height => 2	depth => 1
+[23:48:46] [info] SLCNN: Processing 7 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 4	height => 4	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 2	height => 2	depth => 1
+[23:48:46] [info] SLCNN: Processing 8 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 4	height => 4	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 2	height => 2	depth => 1
+[23:48:46] [info] SLCNN: Processing 9 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 4	height => 4	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 2	height => 2	depth => 1
+[23:48:46] [info] SLCNN:  Grouped Image: width => 2	height => 2	depth => 10
+[23:48:46] [info] SLCNN: Processing Batch => 2 
+[23:48:46] [info] SLCNN: Processing 0 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 4	height => 4	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 2	height => 2	depth => 1
+[23:48:46] [info] SLCNN: Processing 1 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 4	height => 4	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 2	height => 2	depth => 1
+[23:48:46] [info] SLCNN: Processing 2 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 4	height => 4	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 2	height => 2	depth => 1
+[23:48:46] [info] SLCNN: Processing 3 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 4	height => 4	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 2	height => 2	depth => 1
+[23:48:46] [info] SLCNN: Processing 4 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 4	height => 4	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 2	height => 2	depth => 1
+[23:48:46] [info] SLCNN: Processing 5 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 4	height => 4	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 2	height => 2	depth => 1
+[23:48:46] [info] SLCNN: Processing 6 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 4	height => 4	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 2	height => 2	depth => 1
+[23:48:46] [info] SLCNN: Processing 7 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 4	height => 4	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 2	height => 2	depth => 1
+[23:48:46] [info] SLCNN: Processing 8 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 4	height => 4	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 2	height => 2	depth => 1
+[23:48:46] [info] SLCNN: Processing 9 Group(s)
+[23:48:46] [info] SLCNN: Original Image: width => 4	height => 4	depth => 10
+[23:48:46] [info] SLCNN:     Conv Image: width => 2	height => 2	depth => 1
+[23:48:46] [info] SLCNN:  Grouped Image: width => 2	height => 2	depth => 10
+[23:48:46] [info] SLCNN: Forwarding: Layer => Type::BatchNormalize
+[23:48:46] [info] SLCNN: Forwarding: Layer => Type::Activation: relu
+[23:48:46] [info] SLCNN: Forwarding: Layer => Type::MaxPool
+[23:48:46] [info] SLCNN: Processing Batch => 0 
+[23:48:46] [info] SLCNN: Original Image: width => 2	height => 2	depth => 10
+[23:48:46] [info] SLCNN:  MaxPool Image: width => 1	height => 1	depth => 10
+[23:48:46] [info] SLCNN: Processing Batch => 1 
+[23:48:46] [info] SLCNN: Original Image: width => 2	height => 2	depth => 10
+[23:48:46] [info] SLCNN:  MaxPool Image: width => 1	height => 1	depth => 10
+[23:48:46] [info] SLCNN: Processing Batch => 2 
+[23:48:46] [info] SLCNN: Original Image: width => 2	height => 2	depth => 10
+[23:48:46] [info] SLCNN:  MaxPool Image: width => 1	height => 1	depth => 10
+[23:48:46] [info] SLCNN: Forwarding: Layer => Type::Softmax
+[23:48:46] [info] SLCNN: Backwarding: Layer => Type::MaxPool
+[23:48:46] [info] SLCNN: Backwarding: Layer => Type::Activation: relu
+[23:48:46] [info] SLCNN: Backwarding: Layer => Type::BatchNormalize
+[23:48:46] [info] SLCNN: Backwarding: Layer => Type::Convolutional
+[23:48:46] [info] SLCNN: Backwarding: Layer => Type::Activation: relu
+[23:48:46] [info] SLCNN: Backwarding: Layer => Type::BatchNormalize
+[23:48:46] [info] SLCNN: Backwarding: Layer => Type::Convolutional
+[23:48:46] [info] SLCNN: Backwarding: Layer => Type::MaxPool
+[23:48:46] [info] SLCNN: Backwarding: Layer => Type::Activation: relu
+[23:48:46] [info] SLCNN: Backwarding: Layer => Type::BatchNormalize
+[23:48:46] [info] SLCNN: Backwarding: Layer => Type::Convolutional
+[23:48:46] [info] SLCNN: Backwarding: Layer => Type::Activation: relu
+[23:48:46] [info] SLCNN: Backwarding: Layer => Type::BatchNormalize
+[23:48:46] [info] SLCNN: Backwarding: Layer => Type::Convolutional
+[23:48:46] [info] SLCNN: Duration: 0.0578776

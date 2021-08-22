@@ -37,8 +37,8 @@ int main()
     Tensor t2 = Tensor::TestCase;
     Tensor t3 = Tensor::TestCase;
     
-    t1.Reshape(16, 16, 1);
-    t2.Reshape(32, 32, 1);
+    t1.Reshape(16, 16, 3);
+    t2.Reshape(32, 32, 3);
 
     net.Set(Batch{ t1, t2, t3 });
 
