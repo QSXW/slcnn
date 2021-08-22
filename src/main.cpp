@@ -33,9 +33,14 @@ int main()
         { Layer::Type::Softmax }
     } };
 
-    net.Set(Batch{ Tensor::TestCase, Tensor::TestCase, Tensor::TestCase });
+    Tensor t1 = Tensor::TestCase;
+    Tensor t2 = Tensor::TestCase;
+    Tensor t3 = Tensor::TestCase;
+    
+    t1.Reshape(16, 16, 1);
+    t2.Reshape(32, 32, 1);
 
-    auto t = Tensor::TestCase.IM2Col(3);
+    net.Set(Batch{ t1, t2, t3 });
 
     net.Train();
     return 0;

@@ -438,17 +438,17 @@ namespace Check
     bool Mean_Variance_Normalized()
     {
         float SLALIGNED(32) a[] = {
-            1, 2, 3, 4, 5, 6, 7, 8,
-            4, 4, 4, 4, 1, 1, 1, 1,
-            1, 1, 1, 1, 2, 2, 2, 2
+             1,  2,  3,  4,  5,  6,  7,  8,
+             9, 10, 11, 12, 13, 14, 15, 16,
+            17, 18, 19, 20, 21, 22, 23, 24
         };
 
         float SLALIGNED(32) mean[] = {
-            4.5f, 2.5f, 1.5f
+            4.5f, 12.5f, 20.5f
         };
 
         float SLALIGNED(32) variance[] = {
-            6.0f, 2.57143f, 0.28571f
+            6.0f, 6.0f, 6.0f
         };
 
         float SLALIGNED(32) normalize[1] = { 0 };
@@ -461,7 +461,7 @@ namespace Check
         auto ret = Test::CompareFloatingPointSequence<3, 1>(dst, mean);
 
         {
-            Timer timer{ "BasicLinearAlgebraSubprograms::Mean\t", __LINE__, __func__ };
+            Timer timer{ "BasicLinearAlgebraSubprograms::Variance\t", __LINE__, __func__ };
             BasicLinearAlgebraSubprograms::Variance(a, 3, 8, mean, dst);
         }
         ret = Test::CompareFloatingPointSequence<3, 1>(dst, variance);
@@ -471,6 +471,7 @@ namespace Check
             Timer timer{ "BasicLinearAlgebraSubprograms::Normalize\t", __LINE__, __func__ };
             BasicLinearAlgebraSubprograms::Normalize(a, 3, 8, mean, variance);
         }
+        Test::DisplayMatrix<float, 8, 3, 8>(a, "");
         ret = Test::CompareFloatingPointSequence<1, 1>(a, normalize);
 
         return ret;

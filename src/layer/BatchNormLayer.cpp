@@ -12,8 +12,7 @@ namespace sl
         output.Mean();
         output.Variance();
         output.Normalized();
-        output.Scale();
-
+        output.Scale(1.0f);
     }
 
     void BatchNormLayer::Backward(Batch &input, Batch &output)

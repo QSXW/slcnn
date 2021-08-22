@@ -24,7 +24,7 @@ namespace Helper
             }
             if constexpr (std::is_floating_point_v<T>)
             {
-                printf("%g\t", m[i]);
+                printf("%6.2f\t", m[i]);
             }
         }
         printf("\n\n");
@@ -179,6 +179,17 @@ namespace BasicLinearAlgebraSubprograms
         {
             auto X = _mm256_loadu_ps(x + i * INC);
             X = _mm256_mul_ps(X, A);
+            _mm256_storeu_ps(x + i * INC, X);
+        }
+    }
+
+    inline void ScaleBiasAVX2(float *x, float *scale, int size, int INC = 1)
+    {;
+        for (int i = 0; i < size; i += 8)
+        {
+            auto X = _mm256_loadu_ps(x + i * INC);
+            auto B = _mm256_loadu_ps(scale + i * INC);
+            X = _mm256_mul_ps(X, B);
             _mm256_storeu_ps(x + i * INC, X);
         }
     }

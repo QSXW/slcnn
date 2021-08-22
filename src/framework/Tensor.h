@@ -50,9 +50,17 @@ namespace sl
 
         Tensor MaxPool(int poolSize, int sride = 1, int pad = 0);
 
-        void Display()
+        void Display(int channel = -1)
         {
-            for (int i = 0; i < depth; i++)
+            if (channel < 0)
+            {
+                channel = depth;
+            }
+            else
+            {
+                channel++;
+            }
+            for (int i = 0; i < channel; i++)
             {
                 auto tips = std::string("channel ") + std::to_string(i);
                 Helper::DisplayMatrix<float>(data.get() + i * width * height, width, height, width, tips.c_str());

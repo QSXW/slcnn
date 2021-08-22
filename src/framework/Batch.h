@@ -62,16 +62,18 @@ namespace sl
 
         void Normalized();
 
-        void Scale();
+        void Scale(float *scale);
+
+        void Scale(float scale);
 
     public:
         std::vector<Tensor> pool;
 
+        Tensor mean;
+
+        Tensor variance;
+
         int pad{ 0 };
-
-        Tensor mean{};
-
-        Tensor variance{};
 
         int stride{ 1 };
     };

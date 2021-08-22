@@ -63,6 +63,7 @@ namespace sl
         for (auto &layer : layers)
         {
             layer->Forward(input, output);
+            output[0].Display(0);
             input = std::move(output);
             output = Batch{};
         }

@@ -17,6 +17,6 @@ namespace sl
         virtual void Backward(Batch &input, Batch &output) override;
 
     private:
-        
+        float *bias{ nullptr };
     };
 }
