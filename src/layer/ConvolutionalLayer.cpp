@@ -27,40 +27,52 @@ namespace sl
     {
         auto &kernels = description.kernels;
 
+        assert(!input.empty() && "Cannot input a empty Batch");
+
         Log::Info("Forwarding: Layer => {0}", Layer::Stringify(type));
         Log::Info("Batches => {0}", input.size());
         Log::Info("Groups => {0}", bias.size());
 
+        auto outWidth  = (input[0].width + 2 * pad - ksize) / stride + 1;
+        auto outHeight = (input[0].height + 2 * pad - ksize) / stride + 1;
+
+        // Use for every batches, Only for test
+        Tensor kernel{};
+        kernel.ExtendRow(DataSet::Kernel::Edge, ksize * ksize, outWidth * outHeight);
+
         for (int i = 0; i < input.size(); i++)
         {
             Log::Info("Processing Batch => {0} ", i);
-            Tensor group{};
-            group.Reshape((input[i].width + 2 * pad - ksize) / stride + 1,
-                (input[i].height + 2 * pad - ksize) / stride + 1,
-                bias.size());
-                          
+            Tensor group{ outWidth, outHeight, static_cast<int>(bias.size()) };
+
             for (int j = 0; j < bias.size(); j++)
             {
                 Log::Info("Processing {0} Group(s)", j);
-                Tensor intermediate{ input[i].width, input[i].height, input[i].depth };
+                Tensor intermediate{ outWidth, outHeight, input[i].depth };
                 if (ksize != 1)
                 {
                     auto im2col = input[i].IM2Col(ksize);
-                    intermediate.GEMM(im2col, kernels[ksize * j]);
+                    intermediate.GEMM(kernel, im2col);
                 }
                 else
                 {
-                    intermediate.GEMM(input[i], kernels[ksize * j]);
+                    intermediate.GEMM(kernel, input[i]);
                 }
                 intermediate.Blend();
-                intermediate.AddBias(bias[i]);
+                if (!Normalized)
+                {
+                    intermediate.AddBias(bias[i]);
+                }
                 group.PushChannel(intermediate, j);
 
                 Log::Info("Original Image: width => {0}\theight => {1}\tdepth => {2}",
                     input[i].width, input[i].height, input[i].depth);
-                Log::Info("Conv & Grouped: width => {0}\theight => {1}\tdepth => {2}",
+                Log::Info("    Conv Image: width => {0}\theight => {1}\tdepth => {2}",
                    intermediate.width, intermediate.height, intermediate.depth);
             }
+            Log::Info(" Grouped Image: width => {0}\theight => {1}\tdepth => {2}",
+                   group.width, group.height, group.depth);
+            output.emplace_back(std::move(group));
         }
     }
 

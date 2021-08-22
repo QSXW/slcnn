@@ -257,10 +257,8 @@ namespace Check
             auto &c = y2;
             auto n = y2.width * y2.height;
             Timer timer{ "CONV: GEMM", __LINE__, __func__ };
-            for (int i = 0; i < 100; i++)
-            {
-                BasicLinearAlgebraSubprograms::GEMM(y2.depth, n, kernel.width, kernel.data.get(), kernel.width, im2col.data.get(), im2col.width, y2.data.get(), n);
-            }
+            y2.GEMM(kernel, im2col);
+            // BasicLinearAlgebraSubprograms::GEMM(y2.depth, n, kernel.width, kernel.data.get(), kernel.width, im2col.data.get(), im2col.width, y2.data.get(), n);
         }
 
         auto ret = Test::CompareFloatingPointSequence<0, 0>(y1.data.get(), y2.data.get(), y2.width, y2.height);

@@ -18,6 +18,7 @@ namespace sl
         virtual void Backward(Batch &input, Batch &output) override;
 
     private:
-        
+        int pad{ 0 };
+        int stride{ 1 };
     };
 }

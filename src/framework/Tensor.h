@@ -48,6 +48,8 @@ namespace sl
 
         void GEMM(Tensor &a, Tensor &b);
 
+        Tensor MaxPool(int poolSize, int sride = 1, int pad = 0);
+
         void Display()
         {
             for (int i = 0; i < depth; i++)

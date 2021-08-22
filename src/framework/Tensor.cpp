@@ -15,8 +15,9 @@ namespace sl
         height{ y },
         depth{ z }
     {
+        // Log::Info("Construct tensor: x => {0}\ty => {1}\tz => {2}", x, y, z);
         size = static_cast<size_t>(x) * static_cast<size_t>(y) * static_cast<size_t>(z);
-        this->data.reset(sl_aligned_malloc<float>(size, ALIGN_NUM), Deleter());
+        this->data.reset(sl_aligned_malloc<float>(Helper::SafeBoundary(size), ALIGN_NUM), Deleter());
 
         memcpy(this->data.get(), data, size * sizeof(float));
 
@@ -38,7 +39,7 @@ namespace sl
 
     Tensor::~Tensor()
     {
-
+        // Log::Info("Destruct tensor: x => {0}\ty => {1}\tz => {2}", width, height, depth);
     }
 
     Tensor::Tensor(int x, int y, int z) :
@@ -46,8 +47,9 @@ namespace sl
         height{ y },
         depth{ z }
     {
+        // Log::Info("Construct tensor: x => {0}\ty => {1}\tz => {2}", x, y, z);
         size = static_cast<size_t>(x) * static_cast<size_t>(y) * static_cast<size_t>(z);
-        this->data.reset(sl_aligned_malloc<float>(size, ALIGN_NUM), Deleter());
+        this->data.reset(sl_aligned_malloc<float>(Helper::SafeBoundary(size), ALIGN_NUM), Deleter());
         Helper::Clear(data.get(), size);
     }
 
@@ -57,7 +59,7 @@ namespace sl
         if (newSize > size)
         {
             size = newSize;
-            this->data.reset(sl_aligned_malloc<float>(size, ALIGN_NUM), Deleter());
+            this->data.reset(sl_aligned_malloc<float>(Helper::SafeBoundary(size), ALIGN_NUM), Deleter());
             Helper::Clear(this->data.get(), size);
         }
         width  = x;
@@ -78,10 +80,10 @@ namespace sl
 
     void Tensor::PushChannel(Tensor &channel, int index)
     {
-        /*assert(channel.size < this->size && channel.size == this->width * this->height * channel.depth &&
-            "The size of channel must less than the current one and have a identical width and height");*/
-        auto dst = this->data.get() + index * this->width * this->height;
-        memcpy(dst, channel.data.get(), channel.size);
+        assert(channel.size < this->size && channel.size == this->width * this->height * channel.depth &&
+            "The size of channel must less than the current one and have a identical width and height");
+        auto dst = this->data.get() + index * channel.width * channel.height;
+        memcpy(dst, channel.data.get(), channel.size * sizeof(float));
     }
 
     Tensor Tensor::IM2Col(int ksize, int stride, int pad)
@@ -122,12 +124,40 @@ namespace sl
 
     void Tensor::GEMM(Tensor &a, Tensor &b)
     {
-        auto offsetC = this->width * this->height;
-        auto offsetB = b.width * b.height;
-        for (int i = 0; i < this->depth; i++)
+        auto n = width * height;
+        BasicLinearAlgebraSubprograms::GEMM(depth, n, a.width, a.data.get(), a.width, b.data.get(), b.width, data.get(), n);
+    }
+
+    Tensor Tensor::MaxPool(int poolSize, int sride, int pad)
+    {
+        Tensor *input = this;
+        Tensor output{ input->width / poolSize, input->height / poolSize, input->depth };
+
+        for (int d = 0; d < depth; d++)
         {
-            // BasicLinearAlgebraSubprograms::GEMM(0, 0, a.height, b.width, a.width, 1, a.data.get(), a.width, b.data.get() + offsetB, b.width, 1, this->data.get() + offsetC, b.width);
+            auto src = input->data.get() + d * input->width * input->height;
+            auto dst = output.data.get() + d * output.width * output.height;
+            for (int i = 0; i < output.height; i++)
+            {
+                for (int j = 0; j < output.width; j++)
+                {
+                    float max = static_cast<float>(std::numeric_limits<float>().min());
+                    for (int m = 0; m < poolSize; m++)
+                    {
+                        for (int n = 0; n < poolSize; n++)
+                        {
+                            auto iw = i * poolSize;
+                            auto ih = j * poolSize;
+                            auto value = src[std::max(0, iw) * std::min(input->width + ih, input->width)];
+                            max = (value > max) ? value : max;
+                        }
+                    }
+                    dst[i * output.width + j] = max;
+                }
+            }
         }
+
+        return output;
     }
 
     void Tensor::Blend()
@@ -137,8 +167,8 @@ namespace sl
         memcpy(blend.data.get(), this->data.get(), blend.size * sizeof(float));
         for (int i = 1; i < this->depth; i++)
         {
-            auto pass = this->data.get() + i * blend.size;
-            BasicLinearAlgebraSubprograms::AddAVX2(blend.data.get(), pass, blend.size);
+            auto src = this->data.get() + i * blend.size;
+            BasicLinearAlgebraSubprograms::AddAVX2(blend.data.get(), src, blend.size);
         }
 
         *this = std::move(blend);

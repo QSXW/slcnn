@@ -16,10 +16,6 @@ namespace sl
         using LayerList = std::vector<std::shared_ptr<Layer>>;
         static std::shared_ptr<Net> CreateNet();
 
-        static float RKernel[];
-        static float Gkernel[];
-        static float BKernel[];
-
     public:
         Net(const std::initializer_list<Layer::Description> &&descs);
 
@@ -43,5 +39,7 @@ namespace sl
 
         Batch input;
         Batch output;
+
+        Layer::Type lastType{ Layer::Type::None };
     };
 }

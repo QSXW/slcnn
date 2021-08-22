@@ -51,7 +51,16 @@ namespace sl
             pool.push_back(value);
         }
 
+        void emplace_back(Tensor &&value)
+        {
+            pool.emplace_back(value);
+        }
+
     public:
         std::vector<Tensor> pool;
+
+        int pad{ 0 };
+
+        int stride{ 1 };
     };
 }
