@@ -146,9 +146,9 @@ namespace sl
                     {
                         for (int n = 0; n < poolSize; n++)
                         {
-                            auto iw = i * poolSize;
-                            auto ih = j * poolSize;
-                            auto value = src[std::max(0, iw) * std::min(input->width + ih, input->width)];
+                            auto iw = i * poolSize + m;
+                            auto ih = j * poolSize + n;
+                            auto value = src[std::max(0, iw) * input->width + std::min(ih, input->width)];
                             max = (value > max) ? value : max;
                         }
                     }

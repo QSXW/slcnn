@@ -21,4 +21,25 @@ namespace sl
     {
 
     }
+
+    void Batch::Mean()
+    {
+
+    }
+
+    void Batch::Variance()
+    {
+
+    }
+
+    void Batch::Normalized()
+    {
+
+    }
+
+    void Batch::Scale()
+    {
+
+    }
+
 }

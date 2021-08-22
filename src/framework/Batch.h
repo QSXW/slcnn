@@ -56,10 +56,22 @@ namespace sl
             pool.emplace_back(value);
         }
 
+        void Mean();
+
+        void Variance();
+
+        void Normalized();
+
+        void Scale();
+
     public:
         std::vector<Tensor> pool;
 
         int pad{ 0 };
+
+        Tensor mean{};
+
+        Tensor variance{};
 
         int stride{ 1 };
     };

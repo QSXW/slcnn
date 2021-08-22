@@ -78,6 +78,6 @@ namespace sl
 
     void ConvolutionalLayer::Backward(Batch &input, Batch &output)
     {
-
+        Log::Info("Backwarding: Layer => {0}", Layer::Stringify(type));
     }
 }

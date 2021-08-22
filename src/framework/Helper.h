@@ -240,5 +240,46 @@ namespace BasicLinearAlgebraSubprograms
             *dst++ = Convolution(patches + i * ksize, kernel, ksize);
         }
     }
+
+    static inline void Mean(float *x, int depth, int spatial, float *mean)
+    {
+        float scale = 1.0f / spatial;
+        #pragma omp parallel for
+        for(int i = 0; i < depth; i++)
+        {
+            mean[i] = 0;
+            for(int j = 0; j < spatial; j++)
+            {
+                mean[i] += x[i * spatial + j];
+            }
+            mean[i] *= scale;
+        }
+    }
+
+    static inline void Variance(float *x, int depth, int spatial, float *mean, float *variance)
+    {
+        float scale = 1.0f / (spatial - 1);
+        for(int i = 0; i < depth; i++)
+        {
+            variance[i] = 0;
+            for(int j = 0; j < spatial; j++)
+            {
+                variance[i] += pow((x[i * spatial + j] - mean[i]), 2);
+            }
+            variance[i] *= scale;
+        }
+    }
+
+    static inline void Normalize(float *x, int depth, int spatial, float *mean, float *variance)
+    {
+        for(int i = 0; i < depth; i++)
+        {
+            for(int j = 0; j < spatial; j++)
+            {
+                int index = i * spatial + j;
+                x[index] = (x[index] - mean[i]) / (sqrt(variance[i]) + .000001f);
+            }
+        }
+    }
 };
 };

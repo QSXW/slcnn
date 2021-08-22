@@ -7,11 +7,17 @@ namespace sl
     void BatchNormLayer::Forward(Batch &input, Batch &output)
     {
         Log::Info("Forwarding: Layer => {0}", Layer::Stringify(type));
+        
         output = std::move(input);
+        output.Mean();
+        output.Variance();
+        output.Normalized();
+        output.Scale();
+
     }
 
     void BatchNormLayer::Backward(Batch &input, Batch &output)
     {
-
+        Log::Info("Backwarding: Layer => {0}", Layer::Stringify(type));
     }
 }

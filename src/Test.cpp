@@ -388,19 +388,110 @@ namespace Check
 
         return ret;
     }
+
+    bool MaxPool()
+    {
+        float SLALIGNED(32) a[] = {
+            0,  1,  2,  3,  4,  5,  6,  7,
+            8,  9, 10, 11, 12, 13, 14, 15,
+           16, 17, 18, 19, 20, 21, 22, 23,
+           24, 25, 26, 27, 28, 29, 30, 31,
+           32, 33, 34, 35, 36, 37, 38, 39,
+           40, 41, 42, 43, 44, 45, 46, 47,
+           48, 49, 50, 51, 52, 53, 54, 55,
+           56, 57, 58, 59, 60, 61, 62, 63
+        };
+
+        float SLALIGNED(32) ref[] = {
+             9, 11, 13, 15,
+            25, 27, 29, 31,
+            41, 43, 45, 47,
+            57, 59, 61, 63,
+
+             9, 11, 13, 15,
+            25, 27, 29, 31,
+            41, 43, 45, 47,
+            57, 59, 61, 63,
+
+             9, 11, 13, 15,
+            25, 27, 29, 31,
+            41, 43, 45, 47,
+            57, 59, 61, 63
+        };
+
+        Tensor src{};
+        src.ExtendRow(a, 64, 3);
+        src.Reshape(8, 8, 3);
+
+        Tensor dst{};
+        {
+            Timer timer{ "Tensor::MaxPool\t", __LINE__, __func__ };
+            dst = src.MaxPool(2);
+        }
+        // src.Display();
+        // dst.Display();
+        auto ret = Test::CompareFloatingPointSequence<4, 9>(dst.data.get(), ref);
+
+        return ret;
+    }
+
+    bool Mean_Variance_Normalized()
+    {
+        float SLALIGNED(32) a[] = {
+            1, 2, 3, 4, 5, 6, 7, 8,
+            4, 4, 4, 4, 1, 1, 1, 1,
+            1, 1, 1, 1, 2, 2, 2, 2
+        };
+
+        float SLALIGNED(32) mean[] = {
+            4.5f, 2.5f, 1.5f
+        };
+
+        float SLALIGNED(32) variance[] = {
+            6.0f, 2.57143f, 0.28571f
+        };
+
+        float SLALIGNED(32) normalize[1] = { 0 };
+
+        float dst[3] = { 0 };
+        {
+            Timer timer{ "BasicLinearAlgebraSubprograms::Mean\t", __LINE__, __func__ };
+            BasicLinearAlgebraSubprograms::Mean(a, 3, 8, dst);
+        }
+        auto ret = Test::CompareFloatingPointSequence<3, 1>(dst, mean);
+
+        {
+            Timer timer{ "BasicLinearAlgebraSubprograms::Mean\t", __LINE__, __func__ };
+            BasicLinearAlgebraSubprograms::Variance(a, 3, 8, mean, dst);
+        }
+        ret = Test::CompareFloatingPointSequence<3, 1>(dst, variance);
+
+        {
+            normalize[0] = (a[0] - mean[0]) / (sqrt(variance[0]) + .000001f); // standard fomula
+            Timer timer{ "BasicLinearAlgebraSubprograms::Normalize\t", __LINE__, __func__ };
+            BasicLinearAlgebraSubprograms::Normalize(a, 3, 8, mean, variance);
+        }
+        ret = Test::CompareFloatingPointSequence<1, 1>(a, normalize);
+
+        return ret;
+    }
 }
 
 namespace Test
 {
     static std::map<std::string, std::pair<bool, std::function<bool()>>> Benchmarks = {
-        { "ReLu",              { false, Check::ReLu } },
-        { "IM2Col",            { false, Check::IM2Col } },
-        { "CONV",              { false, Check::CONV } },
-        { "SAXPY",             { false, Check::ScalarAlphaXPlusY } },
-        { "Scale",             { false, Check::Scale } },
-        { "Add",               { false, Check::Add } },
-        { "AddBias",           { false, Check::AddBias } },
-        { "A_Fail_Test",       { false, Check::Fail } }
+        { "ReLu",        { false, Check::ReLu } },
+        { "IM2Col",      { false, Check::IM2Col } },
+        { "CONV",        { false, Check::CONV } },
+        { "SAXPY",       { false, Check::ScalarAlphaXPlusY } },
+        { "Scale",       { false, Check::Scale } },
+        { "Add",         { false, Check::Add } },
+        { "Mean",        { false, Check::Mean_Variance_Normalized } },
+        { "Variance",    { false, Check::Mean_Variance_Normalized } },
+        { "Norm",        { false, Check::Mean_Variance_Normalized } }, 
+        { "AddBias",     { false, Check::AddBias } },
+        { "MaxPool",     { false, Check::MaxPool } },
+        { "A_Fail_Test", { false, Check::Fail } }
     };
 
     int Launch()
